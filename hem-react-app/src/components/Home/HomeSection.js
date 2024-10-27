@@ -1,6 +1,6 @@
 // src/components/Home/HomeSection.js
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -9,11 +9,11 @@ import Button from '@mui/material/Button';
 import heroImage from '../../assets/hero1.jpg';
 
 function HomeSection() {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   // Function to handle navigation when the button is clicked
   const handleGetStartedClick = () => {
-    navigate('/predict'); // Navigate to the Predict page
+    navigate('/predict');
   };
 
   return (
@@ -96,33 +96,51 @@ function HomeSection() {
           {/* Green Box inside the Grey Box */}
           <Box
             sx={{
+              
               backgroundColor: '#2F4F4F',
               color: 'white',
               borderRadius: '0 350px 350px 0',
               width: '100%',
               flexGrow: 1,
               boxSizing: 'border-box',
-              padding: '25px',
-              marginTop: '20px',
-              paddingTop: '-20px',
+              padding: '0 25px 15px 25px', // Adjust padding for height
+              marginTop: '10px', // Adjust margin to bring content higher
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
               zIndex: 2,
+              paddingLeft: '20px',
             }}
           >
-            <Typography variant="body1" sx={{ mb: 3, fontWeight: 'normal' }}>
-              Placeholder for text relating to what this website is about and what it can do, and add a call to action for the user to click the button below.
+            <Typography
+              variant="body1"
+              sx={{
+                marginTop: '-70px',
+                marginLeft: '-10px',
+                marginRight: '20px',
+                mb: 2, // Adjusted for more space above button
+                fontWeight: 'normal',
+                textAlign: 'center',
+                fontSize: '1.1rem',
+                fontStyle: 'italic',
+              }}
+            >
+              Stay a step ahead in Melbourne’s housing market. Our platform harnesses machine learning to bring you personalized price forecasts for residential properties—empowering you to buy, sell, or invest with clarity and confidence
             </Typography>
             <Button
               variant="contained"
               color="primary"
-              onClick={handleGetStartedClick} // Attach navigation handler here
+              onClick={handleGetStartedClick}
               sx={{
+                
+                marginTop:'10px',
+                marginLeft: '-70px',
                 backgroundColor: 'white',
                 color: '#2F4F4F',
                 fontWeight: 'bold',
-                borderRadius: '30px 30px 30px 30px',
+                borderRadius: '30px',              
+                alignSelf: 'center ',
+                width: '250px'
               }}
               endIcon={<span>&rarr;</span>}
             >

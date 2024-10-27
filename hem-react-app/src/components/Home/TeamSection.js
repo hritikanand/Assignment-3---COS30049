@@ -55,6 +55,7 @@ function TeamSection() {
               fontWeight: 600,
               color: '#2F4F4F',
               marginBottom: '20px',
+
             }}
           >
             Predict Housing Market Trends
@@ -64,9 +65,16 @@ function TeamSection() {
             sx={{
               color: '#2F4F4F',
               marginBottom: '20px',
+              fontWeight: 525,
+              fontSize: '1.1rem',
+              textAlign: 'justify'
             }}
           >
-            Explanation on how the model predicts housing market trends through machine learning.
+            Unlock insights into Melbourne's housing market with our predictive model. By analyzing critical factors such as school proximity, room-to-bath ratios, and CBD distance, our platform highlights patterns that shape property prices. Leveraging machine learning techniques like Gradient Boosting and Random Forest, it delivers clear, data-driven insights unique to Melbourne’s housing trends.
+            <br />
+            <Box component="span" sx={{ display: 'block', marginTop: '10px',textAlign: 'justify'}}>
+              Curious to see how these predictions work? Dive in to explore the model behind the numbers.
+            </Box>
           </Typography>
           <Link to="/about" style={{ textDecoration: 'none' }}>
             <Button

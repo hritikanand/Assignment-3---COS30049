@@ -84,7 +84,7 @@ const ContactSection = forwardRef((props, ref) => {
     <Box
       ref={ref}
       sx={{
-        marginTop: '40px',
+        marginTop: '-10px',
         display: 'flex',
         flexDirection: { xs: 'column', md: 'row' },
         alignItems: 'center',
@@ -107,7 +107,7 @@ const ContactSection = forwardRef((props, ref) => {
           variant="h5"
           sx={{ fontWeight: 'bold', color: '#2F4F4F', marginBottom: '20px' }}
         >
-          Ask Us Anything
+          Have a Question ?
         </Typography>
 
         <Box
