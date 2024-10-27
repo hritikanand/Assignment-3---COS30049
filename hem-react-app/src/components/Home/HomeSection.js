@@ -1,5 +1,6 @@
 // src/components/Home/HomeSection.js
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -8,6 +9,13 @@ import Button from '@mui/material/Button';
 import heroImage from '../../assets/hero1.jpg';
 
 function HomeSection() {
+  const navigate = useNavigate(); // Initialize useNavigate
+
+  // Function to handle navigation when the button is clicked
+  const handleGetStartedClick = () => {
+    navigate('/predict'); // Navigate to the Predict page
+  };
+
   return (
     <Box
       sx={{
@@ -62,7 +70,7 @@ function HomeSection() {
             width: { xs: '100%', md: '30%' },
             display: 'flex',
             flexDirection: 'column',
-            padding: '20px 0', // Reduced padding on sides to avoid extra space
+            padding: '20px 0',
             paddingTop: 0,
             boxSizing: 'border-box',
             overflow: 'hidden',
@@ -79,7 +87,7 @@ function HomeSection() {
               padding: 0,
               paddingTop: '10px',
               lineHeight: 1,
-              textAlign: 'center', // Centering text within the grey box
+              textAlign: 'center',
             }}
           >
             HOME FOR YOU
@@ -92,14 +100,14 @@ function HomeSection() {
               color: 'white',
               borderRadius: '0 350px 350px 0',
               width: '100%',
-              flexGrow: 1, // Allows the green box to take up remaining space
+              flexGrow: 1,
               boxSizing: 'border-box',
               padding: '25px',
-              marginTop: '20px', // Reduced top margin to lift the box
-              paddingTop: '-20px', // Adding negative padding to lift the content
+              marginTop: '20px',
+              paddingTop: '-20px',
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'center', // Center content vertically
+              justifyContent: 'center',
               zIndex: 2,
             }}
           >
@@ -109,7 +117,13 @@ function HomeSection() {
             <Button
               variant="contained"
               color="primary"
-              sx={{ backgroundColor: 'white', color: '#2F4F4F', fontWeight: 'bold',borderRadius: '30px 30px 30px 30px' }}
+              onClick={handleGetStartedClick} // Attach navigation handler here
+              sx={{
+                backgroundColor: 'white',
+                color: '#2F4F4F',
+                fontWeight: 'bold',
+                borderRadius: '30px 30px 30px 30px',
+              }}
               endIcon={<span>&rarr;</span>}
             >
               Get Started

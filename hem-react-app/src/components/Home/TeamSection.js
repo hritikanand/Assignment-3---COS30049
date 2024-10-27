@@ -1,5 +1,6 @@
 // src/components/Home/TeamSection.js
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -9,14 +10,35 @@ import person2 from '../../assets/person2.jpg';
 import person3 from '../../assets/person3.jpg';
 
 function TeamSection() {
+  const teamMembers = [
+    {
+      name: 'Hritik Anand',
+      id: '104185477',
+      role: 'Project Manager and Model Developer',
+      src: person1,
+    },
+    {
+      name: 'Michelle Abrigo',
+      id: '103074668',
+      role: 'UI/UX Designer, Evaluator, and Implementor',
+      src: person2,
+    },
+    {
+      name: 'Eshita Mahajan',
+      id: '104748964',
+      role: 'Data Analyst and UI/UX Technical Implementor',
+      src: person3,
+    },
+  ];
+
   return (
-    <Box sx={{ paddingTop: '60px' }}> {/* Adjust top padding here as needed */}
+    <Box sx={{ paddingTop: '60px' }}>
       <Box
         sx={{
           display: 'flex',
           flexDirection: { xs: 'column', md: 'row' },
           alignItems: 'flex-start',
-          padding: '80px 20px', // Adds padding between sections
+          padding: '80px 20px',
           gap: '40px',
         }}
       >
@@ -46,21 +68,23 @@ function TeamSection() {
           >
             Explanation on how the model predicts housing market trends through machine learning.
           </Typography>
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: '#2F4F4F',
-              color: 'white',
-              padding: '10px 20px',
-              fontWeight: 'bold',
-              borderRadius: '20px',
-              '&:hover': {
+          <Link to="/about" style={{ textDecoration: 'none' }}>
+            <Button
+              variant="contained"
+              sx={{
                 backgroundColor: '#2F4F4F',
-              },
-            }}
-          >
-            Learn More
-          </Button>
+                color: 'white',
+                padding: '10px 20px',
+                fontWeight: 'bold',
+                borderRadius: '20px',
+                '&:hover': {
+                  backgroundColor: '#2F4F4F',
+                },
+              }}
+            >
+              Learn More
+            </Button>
+          </Link>
         </Box>
 
         {/* Right Section - Team Members */}
@@ -88,31 +112,31 @@ function TeamSection() {
             <span style={{ flexGrow: 1, height: '1px', backgroundColor: '#D3D3D3' }}></span>
           </Typography>
 
-          {/* Team Members in a single row */}
+          {/* Team Members Cards */}
           <Box
             sx={{
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'flex-start',
-              gap: '40px', // Space between cards
-              flexWrap: 'wrap', // Wrap on smaller screens
+              gap: '40px',
+              flexWrap: 'wrap',
             }}
           >
-            {[{ name: 'Hritik Anand', src: person1 }, { name: 'Michelle Abrigo', src: person2 }, { name: 'Eshita Mahajan', src: person3 }].map((member, index) => (
+            {teamMembers.map((member, index) => (
               <Box
                 key={index}
                 sx={{
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  width: '150px',
+                  width: '250px',
                   padding: '20px',
                   backgroundColor: '#F5F5F5',
                   borderRadius: '20px',
+                  textAlign: 'center',
                   position: 'relative',
                 }}
               >
-                {/* Avatar with overlap styling */}
                 <Avatar
                   alt={member.name}
                   src={member.src}
@@ -122,15 +146,18 @@ function TeamSection() {
                     marginBottom: '10px',
                     position: 'absolute',
                     top: '-40px',
-                    border: '3px solid #F5F5F5', // To give a bordered effect if needed
+                    border: '3px solid #F5F5F5',
                   }}
                 />
                 <Box sx={{ marginTop: '40px' }}>
-                  <Typography variant="h6" sx={{ color: '#2F4F4F', marginBottom: '8px' }}>
+                  <Typography variant="h6" sx={{ color: '#2F4F4F', fontWeight: 'bold', marginBottom: '8px' }}>
                     {member.name}
                   </Typography>
-                  <Typography variant="body2" sx={{ color: '#2F4F4F' }}>
-                    Team Introduction
+                  <Typography variant="body2" sx={{ color: '#2F4F4F', fontWeight: 'bold' }}>
+                    {member.id}
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: '#2F4F4F', marginTop: '8px', fontWeight: 500 }}>
+                    {member.role}
                   </Typography>
                 </Box>
               </Box>

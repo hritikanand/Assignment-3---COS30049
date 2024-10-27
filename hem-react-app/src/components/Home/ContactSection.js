@@ -1,14 +1,90 @@
-// src/components/Home/ContactForm.js
-import React from 'react';
+// src/components/Home/ContactSection.js
+import React, { forwardRef, useState } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Snackbar from '@mui/material/Snackbar';
+import SnackbarContent from '@mui/material/SnackbarContent';
+import CircularProgress from '@mui/material/CircularProgress';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ErrorIcon from '@mui/icons-material/Error';
 
-function ContactForm() {
+// Using forwardRef to expose the section for scrolling
+const ContactSection = forwardRef((props, ref) => {
+  const [formData, setFormData] = useState({
+    email: '',
+    phone: '',
+    subject: '',
+    question: '',
+  });
+  const [loading, setLoading] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [isSuccess, setIsSuccess] = useState(true);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleClear = () => {
+    setFormData({ email: '', phone: '', subject: '', question: '' });
+    setSnackbarMessage('Form has been cleared');
+    setIsSuccess(true);
+    setSnackbarOpen(true);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!formData.email) {
+      setSnackbarMessage('Please enter a valid email address');
+      setIsSuccess(false);
+      setSnackbarOpen(true);
+      return;
+    }
+    if (!formData.question) {
+      setSnackbarMessage('Please enter your question');
+      setIsSuccess(false);
+      setSnackbarOpen(true);
+      return;
+    }
+    if (!validateEmail(formData.email)) {
+      setSnackbarMessage('Please enter a valid email address');
+      setIsSuccess(false);
+      setSnackbarOpen(true);
+      return;
+    }
+    if (formData.phone && !validatePhone(formData.phone)) {
+      setSnackbarMessage('Please enter a valid phone number');
+      setIsSuccess(false);
+      setSnackbarOpen(true);
+      return;
+    }
+
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setSnackbarMessage('Thank you for reaching out to us! Your question has been submitted. Our team will reach out to you soon.');
+      setIsSuccess(true);
+      setSnackbarOpen(true);
+    }, 10000);
+  };
+
+  const validateEmail = (email) => /\S+@\S+\.\S+/.test(email);
+  const validatePhone = (phone) => /^[0-9]{10}$/.test(phone);
+
+  const handleCloseSnackbar = () => setSnackbarOpen(false);
+
   return (
     <Box
+      ref={ref}
       sx={{
+        marginTop: '40px',
         display: 'flex',
         flexDirection: { xs: 'column', md: 'row' },
         alignItems: 'center',
@@ -20,7 +96,7 @@ function ContactForm() {
       {/* Form Section */}
       <Box
         sx={{
-          backgroundColor: '#F5F5F5', // Light grey background for enclosing box
+          backgroundColor: '#F5F5F5',
           padding: '30px',
           borderRadius: '10px',
           width: { xs: '100%', md: '45%' },
@@ -31,10 +107,12 @@ function ContactForm() {
           variant="h5"
           sx={{ fontWeight: 'bold', color: '#2F4F4F', marginBottom: '20px' }}
         >
-          Reach Out to Us
+          Ask Us Anything
         </Typography>
+
         <Box
           component="form"
+          onSubmit={handleSubmit}
           sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -44,47 +122,60 @@ function ContactForm() {
           autoComplete="off"
         >
           <TextField
+            name="email"
             label="Email Address*"
             variant="outlined"
             fullWidth
-            sx={{ backgroundColor: 'white' }} // White background for fields
+            value={formData.email}
+            onChange={handleChange}
+            sx={{ backgroundColor: 'white' }}
             InputLabelProps={{
               style: { fontWeight: 'bold', color: '#2F4F4F' },
             }}
           />
           <Box sx={{ display: 'flex', gap: '10px' }}>
             <TextField
+              name="phone"
               label="Phone Number"
               variant="outlined"
               fullWidth
-              sx={{ backgroundColor: 'white' }} // White background
+              value={formData.phone}
+              onChange={handleChange}
+              sx={{ backgroundColor: 'white' }}
               InputLabelProps={{
                 style: { fontWeight: 'bold', color: '#2F4F4F' },
               }}
             />
             <TextField
+              name="subject"
               label="Subject"
               variant="outlined"
               fullWidth
-              sx={{ backgroundColor: 'white' }} // White background
+              value={formData.subject}
+              onChange={handleChange}
+              sx={{ backgroundColor: 'white' }}
               InputLabelProps={{
                 style: { fontWeight: 'bold', color: '#2F4F4F' },
               }}
             />
           </Box>
           <TextField
-            label="Question"
+            name="question"
+            label="Question*"
             variant="outlined"
             fullWidth
             multiline
             rows={4}
-            sx={{ backgroundColor: 'white' }} // White background
+            value={formData.question}
+            onChange={handleChange}
+            sx={{ backgroundColor: 'white' }}
             InputLabelProps={{
               style: { fontWeight: 'bold', color: '#2F4F4F' },
             }}
           />
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Button
+              onClick={handleClear}
               variant="outlined"
               sx={{
                 color: '#2F4F4F',
@@ -96,6 +187,7 @@ function ContactForm() {
               Clear Form
             </Button>
             <Button
+              type="submit"
               variant="contained"
               sx={{
                 backgroundColor: '#2F4F4F',
@@ -105,36 +197,93 @@ function ContactForm() {
                   backgroundColor: '#2F4F4F',
                 },
               }}
+              disabled={loading}
             >
-              Send
+              {loading ? <CircularProgress size={24} color="inherit" /> : 'Submit'}
             </Button>
           </Box>
         </Box>
       </Box>
 
-      {/* Text Section */}
+      {/* Additional Content Section */}
       <Box
         sx={{
+          position: 'relative',
           textAlign: 'center',
           width: { xs: '100%', md: '45%' },
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           flexDirection: 'column',
-          fontWeight: 'bold',
-          fontSize: '48px',
-          color: '#2F4F4F',
         }}
       >
-        <Typography variant="h2" sx={{ fontWeight: 'bold', lineHeight: 1.2 }}>
+        <Box
+          sx={{
+            position: 'absolute',
+            width: 'calc(75% + 75px)',
+            height: '400px',
+            backgroundColor: '#F5F5F5',
+            borderRadius: '350px 0 0 350px',
+            zIndex: -1,
+            top: '50%',
+            right: '-10px',
+            transform: 'translateY(-50%)',
+          }}
+        />
+        <Typography
+          variant="h3"
+          sx={{
+            fontWeight: 700,
+            color: '#2F4F4F',
+            lineHeight: 1.2,
+            zIndex: 1,
+            paddingLeft: '120px',
+          }}
+        >
           REACH OUT
         </Typography>
-        <Typography variant="h2" sx={{ fontWeight: 'bold', lineHeight: 1.2 }}>
+        <Typography
+          variant="h3"
+          sx={{
+            fontWeight: 700,
+            color: '#2F4F4F',
+            lineHeight: 1.2,
+            zIndex: 1,
+            paddingLeft: '150px',
+          }}
+        >
           TO US
         </Typography>
       </Box>
+
+      {/* Snackbar */}
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+      >
+        <SnackbarContent
+          style={{
+            backgroundColor: isSuccess ? '#FFFFFF' : '#FFFFFF',
+            border: `2px solid ${isSuccess ? '#2F4F4F' : '#FF0000'}`,
+            color: isSuccess ? '#2F4F4F' : '#FF0000',
+            display: 'flex',
+            alignItems: 'center',
+          }}
+          message={
+            <span style={{ display: 'flex', alignItems: 'center' }}>
+              {isSuccess ? (
+                <CheckCircleIcon style={{ marginRight: '8px', color: '#2F4F4F' }} />
+              ) : (
+                <ErrorIcon style={{ marginRight: '8px', color: '#FF0000' }} />
+              )}
+              {snackbarMessage}
+            </span>
+          }
+        />
+      </Snackbar>
     </Box>
   );
-}
+});
 
-export default ContactForm;
+export default ContactSection;
