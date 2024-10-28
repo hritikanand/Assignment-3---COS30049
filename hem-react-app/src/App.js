@@ -8,7 +8,21 @@ import TeamSection from './components/Home/TeamSection';
 import ContactSection from './components/Home/ContactSection';
 import About from './components/About/AboutSection';
 
-const Predict = () => <div style={{ padding: '60px', textAlign: 'center' }}><h2>Predict Page</h2></div>;
+const Predict = () => (
+  <div style={{ padding: '60px', textAlign: 'center' }}>
+    <h2>Predict Page</h2>
+  </div>
+);
+
+function ScrollToTopOnMount() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top of the page on component mount or route change
+  }, [pathname]);
+
+  return null;
+}
 
 function ScrollToContact({ contactRef }) {
   const location = useLocation();
@@ -29,6 +43,7 @@ function App() {
     <Router>
       <div>
         <Header contactRef={contactRef} />
+        <ScrollToTopOnMount /> {/* This will ensure the page loads from the top on each route */}
 
         <Routes>
           {/* Home Page with Contact Ref and Scroll Logic */}
