@@ -84,30 +84,36 @@ const ContactSection = forwardRef((props, ref) => {
     <Box
       ref={ref}
       sx={{
-        marginTop: '-10px',
         display: 'flex',
         flexDirection: { xs: 'column', md: 'row' },
         alignItems: 'center',
         justifyContent: 'space-between',
         gap: '40px',
-        padding: '60px 20px',
+        padding: '60px 65px',
       }}
     >
       {/* Form Section */}
       <Box
         sx={{
           backgroundColor: '#F5F5F5',
-          padding: '30px',
+          padding: '40px',
           borderRadius: '10px',
-          width: { xs: '100%', md: '45%' },
+          width: { xs: '100%', md: '40%' },
           boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
+          marginLeft: '50px',
         }}
       >
         <Typography
           variant="h5"
-          sx={{ fontWeight: 'bold', color: '#2F4F4F', marginBottom: '20px' }}
+          sx={{ 
+            fontWeight: 'bold', 
+            fontFamily: '"Roboto Condensed", sans-serif',
+            fontSize: '2.8rem',
+            color: '#2F4F4F', 
+            marginBottom: '30px' 
+          }}
         >
-          Have a Question ?
+          Have a Question?
         </Typography>
 
         <Box
@@ -116,23 +122,39 @@ const ContactSection = forwardRef((props, ref) => {
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            gap: '15px',
+            gap: '25px',
           }}
           noValidate
           autoComplete="off"
         >
-          <TextField
-            name="email"
-            label="Email Address*"
-            variant="outlined"
-            fullWidth
-            value={formData.email}
-            onChange={handleChange}
-            sx={{ backgroundColor: 'white' }}
-            InputLabelProps={{
-              style: { fontWeight: 'bold', color: '#2F4F4F' },
-            }}
-          />
+        <TextField
+          name="phone"
+          label="Phone Number"
+          variant="outlined"
+          fullWidth
+          value={formData.phone}
+          onChange={handleChange}
+          sx={{ 
+            backgroundColor: 'white',
+            '& .MuiOutlinedInput-root': {
+              '& fieldset': {
+                borderWidth: '3px', // thickness of the outline
+                borderColor: '#CED1D6'
+              },
+              '&:hover fieldset': {
+                borderWidth: '3px', //thickness on hover
+                borderColor: '#2F4F4F', //color when hover
+              },
+              '&.Mui-focused fieldset': {
+                borderColor: '#2F4F4F', //color when focused
+                borderWidth: '3px', // thickness when focused
+              },
+            },
+          }}
+          InputLabelProps={{
+            style: { fontWeight: 'bold', color: '#A3A7AF' },
+          }}
+        />
           <Box sx={{ display: 'flex', gap: '10px' }}>
             <TextField
               name="phone"
@@ -141,9 +163,25 @@ const ContactSection = forwardRef((props, ref) => {
               fullWidth
               value={formData.phone}
               onChange={handleChange}
-              sx={{ backgroundColor: 'white' }}
+              sx={{ 
+                backgroundColor: 'white',
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderWidth: '3px', // thickness of the outline
+                    borderColor: '#CED1D6'                
+                  },
+                  '&:hover fieldset': {
+                    borderWidth: '3px', //thickness on hover
+                    borderColor: '#2F4F4F', //color when hover
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#2F4F4F', //color when focused
+                    borderWidth: '3px', // thickness when focused
+                  },
+                },
+              }}
               InputLabelProps={{
-                style: { fontWeight: 'bold', color: '#2F4F4F' },
+                style: { fontWeight: 'bold', color: '#A3A7AF' },
               }}
             />
             <TextField
@@ -153,9 +191,25 @@ const ContactSection = forwardRef((props, ref) => {
               fullWidth
               value={formData.subject}
               onChange={handleChange}
-              sx={{ backgroundColor: 'white' }}
+              sx={{ 
+                backgroundColor: 'white',
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderWidth: '3px', // thickness of the outline
+                    borderColor: '#CED1D6'
+                  },
+                  '&:hover fieldset': {
+                    borderWidth: '3px', //thickness on hover
+                    borderColor: '#2F4F4F', //color when hover
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#2F4F4F', //color when focused
+                    borderWidth: '3px', // thickness when focused
+                  },
+                },
+              }}
               InputLabelProps={{
-                style: { fontWeight: 'bold', color: '#2F4F4F' },
+                style: { fontWeight: 'bold', color: '#A3A7AF' },
               }}
             />
           </Box>
@@ -168,9 +222,25 @@ const ContactSection = forwardRef((props, ref) => {
             rows={4}
             value={formData.question}
             onChange={handleChange}
-            sx={{ backgroundColor: 'white' }}
+            sx={{ 
+              backgroundColor: 'white',
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderWidth: '3px', // thickness of the outline
+                  borderColor: '#CED1D6'
+                },
+                '&:hover fieldset': {
+                  borderWidth: '3px', //thickness on hover
+                  borderColor: '#2F4F4F', //color when hover
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: '#2F4F4F', //color when focused
+                  borderWidth: '3px', // thickness when focused
+                },
+              },
+            }}
             InputLabelProps={{
-              style: { fontWeight: 'bold', color: '#2F4F4F' },
+              style: { fontWeight: 'bold', color: '#A3A7AF' },
             }}
           />
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -182,6 +252,7 @@ const ContactSection = forwardRef((props, ref) => {
                 borderColor: '#D3D3D3',
                 fontWeight: 'bold',
                 backgroundColor: '#E0E0E0',
+                padding: '12px 24px',
               }}
             >
               Clear Form
@@ -193,6 +264,7 @@ const ContactSection = forwardRef((props, ref) => {
                 backgroundColor: '#2F4F4F',
                 color: 'white',
                 fontWeight: 'bold',
+                padding: '12px 45px',
                 '&:hover': {
                   backgroundColor: '#2F4F4F',
                 },
@@ -220,24 +292,28 @@ const ContactSection = forwardRef((props, ref) => {
         <Box
           sx={{
             position: 'absolute',
-            width: 'calc(75% + 75px)',
-            height: '400px',
+            width: 'calc(60% + 10px)',
+            height: '350px',
             backgroundColor: '#F5F5F5',
-            borderRadius: '350px 0 0 350px',
+            borderRadius: '0px 0px 0px 500px',
             zIndex: -1,
-            top: '50%',
-            right: '-10px',
-            transform: 'translateY(-50%)',
+            
+            right: '50px',
+            transform: 'translateY(-28%)',
           }}
         />
         <Typography
           variant="h3"
           sx={{
             fontWeight: 700,
-            color: '#2F4F4F',
+            fontFamily: '"Roboto Condensed", sans-serif',
+            fontSize: '5rem',
+            fontStyle: 'italic',
+            color: 'black',
             lineHeight: 1.2,
             zIndex: 1,
             paddingLeft: '120px',
+            transform: 'translateX(-30%)',
           }}
         >
           REACH OUT
@@ -246,10 +322,14 @@ const ContactSection = forwardRef((props, ref) => {
           variant="h3"
           sx={{
             fontWeight: 700,
-            color: '#2F4F4F',
+            fontFamily: '"Roboto Condensed", sans-serif',
+            fontSize: '5rem',
+            fontStyle: 'italic',
+            color: 'black',
             lineHeight: 1.2,
             zIndex: 1,
             paddingLeft: '150px',
+            transform: 'translateX(-50%)'
           }}
         >
           TO US

@@ -32,28 +32,31 @@ function TeamSection() {
   ];
 
   return (
-    <Box sx={{ paddingTop: '60px' }}>
+    <Box sx={{ paddingTop: '100px'}}>
       <Box
         sx={{
           display: 'flex',
           flexDirection: { xs: 'column', md: 'row' },
           alignItems: 'flex-start',
-          padding: '80px 20px',
-          gap: '40px',
+          padding: '80px 75px',
+          gap: '30px',
         }}
       >
         {/* Left Section - Predict Housing Market Trends */}
         <Box
           sx={{
-            width: { xs: '100%', md: '30%' },
+            width: { xs: '100%', md: '60%' },
             textAlign: 'left',
+            padding: '100px 35px',
           }}
         >
           <Typography
             variant="h4"
             sx={{
+              fontFamily: '"Roboto Condensed", sans-serif',
               fontWeight: 600,
-              color: '#2F4F4F',
+              fontSize: '3rem',
+              color: 'black',
               marginBottom: '20px',
 
             }}
@@ -65,14 +68,15 @@ function TeamSection() {
             sx={{
               color: '#2F4F4F',
               marginBottom: '20px',
-              fontWeight: 525,
-              fontSize: '1.1rem',
+              fontWeight: 400,
+              fontFamily: '"Roboto Condensed", sans-serif',
+              fontSize: '1.3rem',
               textAlign: 'justify'
             }}
           >
-            Unlock insights into Melbourne's housing market with our predictive model. By analyzing critical factors such as school proximity, room-to-bath ratios, and CBD distance, our platform highlights patterns that shape property prices. Leveraging machine learning techniques like Gradient Boosting and Random Forest, it delivers clear, data-driven insights unique to Melbourne’s housing trends.
+            Unlock insights into Melbourne's housing market with our predictive model. By analysing critical factors such as school proximity, room-to-bath ratios, and CBD distance, our platform highlights patterns that shape property prices. Leveraging machine learning techniques like Gradient Boosting and Random Forest, it delivers clear, data-driven insights unique to Melbourne’s housing trends.
             <br />
-            <Box component="span" sx={{ display: 'block', marginTop: '10px',textAlign: 'justify'}}>
+            <Box component="span" sx={{ display: 'block', marginTop: '15px',textAlign: 'justify'}}>
               Curious to see how these predictions work? Dive in to explore the model behind the numbers.
             </Box>
           </Typography>
@@ -82,9 +86,11 @@ function TeamSection() {
               sx={{
                 backgroundColor: '#2F4F4F',
                 color: 'white',
-                padding: '10px 20px',
+                padding: '20px 50px',
+                fontFamily: '"Roboto Condensed", sans-serif',
                 fontWeight: 'bold',
-                borderRadius: '20px',
+                fontSize: '1.2rem',
+                borderRadius: '50px',
                 '&:hover': {
                   backgroundColor: '#2F4F4F',
                 },
@@ -98,26 +104,42 @@ function TeamSection() {
         {/* Right Section - Team Members */}
         <Box
           sx={{
-            width: { xs: '100%', md: '70%' },
+            width: { xs: '100%', md: '90%' },
             textAlign: 'center',
           }}
         >
           <Typography
-            variant="h4"
-            sx={{
-              fontWeight: 500,
-              color: '#2F4F4F',
-              marginBottom: '40px',
-              fontStyle: 'italic',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              gap: '10px',
+          variant="h4"
+          sx={{
+            fontWeight: 500,
+            color: '#2F4F4F',
+            marginBottom: '90px', //gap from 'the team' and member boxes
+            fontStyle: 'italic',
+            fontWeight: 'bold',
+            fontSize: '2.5rem',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '10px',
+          }}
+        >
+          <span
+            style={{
+              flexGrow: 0,
+              width: '19%',
+              height: '1px',
+              borderTop: '3px dotted #2F4F4F', //dotted line
             }}
-          >
-            <span style={{ flexGrow: 1, height: '1px', backgroundColor: '#D3D3D3' }}></span>
-            The Team
-            <span style={{ flexGrow: 1, height: '1px', backgroundColor: '#D3D3D3' }}></span>
+          ></span>
+          The Team
+          <span
+            style={{
+              flexGrow: 0,
+              width: '19%',
+              height: '1px', 
+              borderTop: '3px dotted #2F4F4F', // dotted line
+            }}
+          ></span>
           </Typography>
 
           {/* Team Members Cards */}
@@ -126,7 +148,7 @@ function TeamSection() {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'flex-start',
-              gap: '40px',
+              gap: '30px',
               flexWrap: 'wrap',
             }}
           >
@@ -138,9 +160,10 @@ function TeamSection() {
                   flexDirection: 'column',
                   alignItems: 'center',
                   width: '250px',
+                  height: '300px',
                   padding: '20px',
                   backgroundColor: '#F5F5F5',
-                  borderRadius: '20px',
+                  borderRadius: '40px',
                   textAlign: 'center',
                   position: 'relative',
                 }}
@@ -149,22 +172,46 @@ function TeamSection() {
                   alt={member.name}
                   src={member.src}
                   sx={{
-                    width: 80,
-                    height: 80,
+                    width: 150,
+                    height: 150,
                     marginBottom: '10px',
                     position: 'absolute',
-                    top: '-40px',
+                    top: '-60px',
                     border: '3px solid #F5F5F5',
                   }}
                 />
-                <Box sx={{ marginTop: '40px' }}>
-                  <Typography variant="h6" sx={{ color: '#2F4F4F', fontWeight: 'bold', marginBottom: '8px' }}>
+                <Box sx={{ 
+                  marginTop: '90px', 
+                  }}>
+                  <Typography variant="h6" 
+                  sx={{ 
+                    fontFamily: '"Roboto Condensed", sans-serif',
+                    fontSize: '1.5rem',
+                    color: '#2F4F4F', 
+                    fontWeight: 'bold', 
+                    marginBottom: '1px' 
+                    }}>
                     {member.name}
                   </Typography>
-                  <Typography variant="body2" sx={{ color: '#2F4F4F', fontWeight: 'bold' }}>
+
+                  <Typography variant="body2" 
+                  sx={{ 
+                    color: '#black', 
+                    fontSize: '1rem',
+                    fontWeight: 'bold', 
+                    marginBottom: '20px' 
+                    }}>
                     {member.id}
                   </Typography>
-                  <Typography variant="body2" sx={{ color: '#2F4F4F', marginTop: '8px', fontWeight: 500 }}>
+                  
+                  <Typography variant="body2" 
+                  sx={{ 
+                    color: '#black', 
+                    marginTop: '8px', 
+                    fontSize: '1.1rem',
+                    fontWeight: 500, 
+                    padding: '2px'
+                    }}>
                     {member.role}
                   </Typography>
                 </Box>

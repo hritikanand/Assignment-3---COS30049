@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
 // Import the hero image
-import heroImage from '../../assets/hero1.jpg';
+import heroImage from '../../assets/hero1.PNG';
 
 function HomeSection() {
   const navigate = useNavigate();
@@ -33,8 +33,8 @@ function HomeSection() {
       <Box
         sx={{
           position: 'absolute',
-          top: { xs: '100px', md: '125px' },
-          left: { xs: '20px', md: '10px' },
+          top: { xs: '100px', md: '135px' },
+          left: { xs: '20px', md: '60px' },
           zIndex: 3,
           transform: 'translateY(-100%)',
         }}
@@ -42,9 +42,10 @@ function HomeSection() {
         <Typography
           variant="h2"
           sx={{
-            fontWeight: 500,
+            fontFamily: '"Roboto Condensed", sans-serif', 
+            fontWeight: 430,
+            fontSize: '4.5rem',
             color: 'black',
-            lineHeight: 1,
           }}
         >
           DISCOVER THE FUTURE
@@ -65,9 +66,9 @@ function HomeSection() {
         {/* Grey Background Box */}
         <Box
           sx={{
-            backgroundColor: '#D3D3D3',
+            backgroundColor: '#d2d5db',
             borderRadius: '0 25px 25px 0',
-            width: { xs: '100%', md: '30%' },
+            width: { xs: '100%', md: '33%' },
             display: 'flex',
             flexDirection: 'column',
             padding: '20px 0',
@@ -81,13 +82,16 @@ function HomeSection() {
           <Typography
             variant="h3"
             sx={{
-              fontWeight: 500,
+              fontFamily: '"Roboto Condensed", sans-serif', 
+              fontWeight: 430,
+              fontSize: '4.4rem',
               color: 'black',
               margin: 0,
               padding: 0,
               paddingTop: '10px',
+              paddingLeft: '60px',
               lineHeight: 1,
-              textAlign: 'center',
+              textAlign: 'left',
             }}
           >
             HOME FOR YOU
@@ -99,29 +103,31 @@ function HomeSection() {
               
               backgroundColor: '#2F4F4F',
               color: 'white',
-              borderRadius: '0 350px 350px 0',
+              borderRadius: '0 330px 25px 0',
               width: '100%',
               flexGrow: 1,
               boxSizing: 'border-box',
-              padding: '0 25px 15px 25px', // Adjust padding for height
+              padding: '0 50px 25px 0px', // Adjust padding for height
               marginTop: '10px', // Adjust margin to bring content higher
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
               zIndex: 2,
               paddingLeft: '20px',
+              transform: 'translateY(20px)', // Move down by 20 pixels
             }}
           >
             <Typography
               variant="body1"
               sx={{
-                marginTop: '-70px',
-                marginLeft: '-10px',
+                marginTop: '100px',
+                marginLeft: '45px',
                 marginRight: '20px',
-                mb: 2, // Adjusted for more space above button
+                mb: -4, // Adjusted for more space above button
                 fontWeight: 'normal',
-                textAlign: 'center',
-                fontSize: '1.1rem',
+                fontFamily: '"Roboto Condensed", sans-serif',
+                textAlign: 'left',
+                fontSize: '1.35rem',
                 fontStyle: 'italic',
               }}
             >
@@ -133,14 +139,16 @@ function HomeSection() {
               onClick={handleGetStartedClick}
               sx={{
                 
-                marginTop:'10px',
-                marginLeft: '-70px',
+                marginTop:'70px',
+                marginLeft: '45px',
                 backgroundColor: 'white',
-                color: '#2F4F4F',
+                color: 'black',
+                fontFamily: '"Roboto Condensed", sans-serif',
+                fontSize: '1.2rem',
                 fontWeight: 'bold',
                 borderRadius: '30px',              
-                alignSelf: 'center ',
-                width: '250px'
+                alignSelf: 'left',
+                width: '200px'
               }}
               endIcon={<span>&rarr;</span>}
             >
@@ -154,24 +162,25 @@ function HomeSection() {
           sx={{
             flex: 1,
             display: 'flex',
-            justifyContent: 'center',
+            justifyContent: 'right',
             alignItems: 'center',
             zIndex: 3,
           }}
         >
-          <img
-            src={heroImage}
-            alt="Person with laptop"
-            style={{
-              width: '100%',
-              height: 'auto',
-              maxHeight: '100%',
-              objectFit: 'cover',
-              borderRadius: '25px 0 0 25px',
-            }}
-          />
+        <Box
+          component="img"
+          src={heroImage}
+          alt="Person with laptop"
+          sx={{
+            width: { xs: '80%', md: '100%' }, // 80% width on small screens, 100% on medium and up
+            height: 'auto',
+            maxHeight: '680px', 
+            objectFit: 'cover',
+            borderRadius: '25px 0 0 25px',
+          }}
+        />
         </Box>
-      </Box>
+      </Box>      
     </Box>
   );
 }

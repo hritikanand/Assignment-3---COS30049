@@ -46,8 +46,16 @@ function Header({ contactRef }) {
       >
         {/* Logo and Title */}
         <Box sx={{ display: 'flex', alignItems: 'center', mr: 'auto' }}>
-          <IconButton edge="start" color="inherit" aria-label="logo" sx={{ p: 0 }}>
-            <img src={logo} alt="H.EM logo" style={{ width: '40px', height: '40px' }} />
+          <IconButton edge="start" color="inherit" aria-label="logo" sx={{ p: 0, '&:hover': { backgroundColor: 'transparent' } }}
+            onClick={() => navigate('/')}
+            disableRipple
+            >
+            <img src={logo} alt="H.EM logo" style={{ 
+              width: '40px', 
+              height: '40px',
+              marginLeft: '20px',
+               
+              }} />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ fontWeight: 'bold', ml: 1 }}>
             H.EM
@@ -59,24 +67,26 @@ function Header({ contactRef }) {
           sx={{
             display: 'flex',
             justifyContent: 'center',
-            backgroundColor: '#E0E0E0',
-            borderRadius: '20px',
-            padding: '4px 8px',
-            gap: 2,
+            backgroundColor: '#e4e9ec',
+            borderRadius: '50px',
+            ml: 10, //adjust navigation to the middle, bc of the sign up button it looks off center with just default justify
           }}
         >
           <Button
             component={Link}
             to="/"
             sx={{
+              fontFamily: '"Roboto Condensed", sans-serif',
               fontWeight: 'bold',
-              borderRadius: '20px',
+              fontSize: '1.25rem',
+              borderRadius: '50px',
               backgroundColor: location.pathname === '/' ? '#2F4F4F' : 'transparent',
               color: location.pathname === '/' ? 'white' : '#333',
+              textTransform: 'none',
               '&:hover': {
                 backgroundColor: location.pathname === '/' ? '#2F4F4F' : 'transparent',
               },
-              minWidth: '100px',
+              minWidth: '150px',
             }}
           >
             Home
@@ -85,14 +95,17 @@ function Header({ contactRef }) {
             component={Link}
             to="/about"
             sx={{
+              fontFamily: '"Roboto Condensed", sans-serif',
               fontWeight: 'bold',
+              fontSize: '1.25rem',
               borderRadius: '20px',
               backgroundColor: location.pathname === '/about' ? '#2F4F4F' : 'transparent',
               color: location.pathname === '/about' ? 'white' : '#333',
+              textTransform: 'none',
               '&:hover': {
                 backgroundColor: location.pathname === '/about' ? '#2F4F4F' : 'transparent',
               },
-              minWidth: '100px',
+              minWidth: '150px',
             }}
           >
             About
@@ -101,14 +114,17 @@ function Header({ contactRef }) {
             component={Link}
             to="/predict"
             sx={{
+              fontFamily: '"Roboto Condensed", sans-serif',
               fontWeight: 'bold',
+              fontSize: '1.25rem',
               borderRadius: '20px',
               backgroundColor: location.pathname === '/predict' ? '#2F4F4F' : 'transparent',
               color: location.pathname === '/predict' ? 'white' : '#333',
+              textTransform: 'none',
               '&:hover': {
                 backgroundColor: location.pathname === '/predict' ? '#2F4F4F' : 'transparent',
               },
-              minWidth: '100px',
+              minWidth: '150px',
             }}
           >
             Predict
@@ -116,14 +132,17 @@ function Header({ contactRef }) {
           <Button
             onClick={handleContactClick}
             sx={{
+              fontFamily: '"Roboto Condensed", sans-serif',
               fontWeight: 'bold',
+              fontSize: '1.25rem',
               borderRadius: '20px',
               backgroundColor: location.pathname === '/' && location.state?.scrollToContact ? '#2F4F4F' : 'transparent',
               color: location.pathname === '/' && location.state?.scrollToContact ? 'white' : '#333',
+              textTransform: 'none',
               '&:hover': {
                 backgroundColor: location.pathname === '/' && location.state?.scrollToContact ? '#2F4F4F' : 'transparent',
               },
-              minWidth: '100px',
+              minWidth: '150px',
             }}
           >
             Contact
@@ -131,16 +150,21 @@ function Header({ contactRef }) {
         </Box>
 
         {/* Sign In/Sign Up Button */}
+        
         <Button
           variant="outlined"
           color="inherit"
           onClick={handleDialogOpen}
           sx={{
+            fontFamily: '"Roboto Condensed", sans-serif',
+            fontWeight: 'bold',
+            fontSize: '1.25rem',
             borderColor: '#2F4F4F',
             color: '#2F4F4F',
-            borderRadius: '20px',
+            borderRadius: '50px',
             px: 2,
             backgroundColor: 'transparent',
+            borderWidth: 3,
             '&:hover': {
               borderColor: '#2F4F4F',
               backgroundColor: '#E0E0E0',
