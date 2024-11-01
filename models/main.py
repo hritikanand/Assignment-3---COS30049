@@ -60,6 +60,7 @@ except Exception as e:
 if not all([rf_model, poly_model, gbr_model, poly_transformer]):
     raise RuntimeError("One or more models or transformers failed to load. Please check the paths and files.")
 
+
 # Input data format for the API
 class InputData(BaseModel):
     rooms: int
@@ -76,9 +77,9 @@ def predict(input_data: InputData):
             "Bathroom": input_data.bathroom,            
             "Distance_from_CBD": input_data.distance_from_cbd,
             "Schooling_Facilities": input_data.schooling_facilities,
-            "Rooms_Bathroom_Interaction": input_data.rooms * input_data.bathroom,  # Interaction feature            
-            "Distance_Schools_Interaction": input_data.distance_from_cbd,  # Placeholder           
-            "Schools_Distance_Ratio": input_data.distance_from_cbd  # Placeholder
+            "Rooms_Bathroom_Interaction": (input_data.rooms * input_data.bathroom),              
+            "Distance_Schools_Interaction": (input_data.distance_from_cbd * input_data.schooling_facilities),            
+            "Schools_Distance_Ratio": input_data.schooling_facilities / (input_data.distance_from_cbd + 1) 
         }])
 
         #THIS NEEDS TO BE IN THE EXACT ORDER THAT THE MODEL WAS TRAINED
@@ -94,6 +95,13 @@ def predict(input_data: InputData):
         # DEBUGGING Convert transformed features into a DataFrame
         X_poly_df = pd.DataFrame(X_poly)
         print("Input data after polynomial transformation:", X_poly_df)
+
+        # Apply polynomial transformation for polynomial model
+        X_poly = poly_transformer.transform(X_base)
+
+        # Convert transformed features into a DataFrame for debugging
+        X_poly_df = pd.DataFrame(X_poly)
+        print("Transformed polynomial features (X_poly) summary:\n", X_poly_df.describe())
 
         # predictions w. each model
         rf_prediction = rf_model.predict(X_base)  # Random Forest uses base features
