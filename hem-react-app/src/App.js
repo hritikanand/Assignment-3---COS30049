@@ -7,12 +7,7 @@ import HomeSection from './components/Home/HomeSection';
 import TeamSection from './components/Home/TeamSection';
 import ContactSection from './components/Home/ContactSection';
 import About from './components/About/AboutSection';
-
-const Predict = () => (
-  <div style={{ padding: '60px', textAlign: 'center' }}>
-    <h2>Predict Page</h2>
-  </div>
-);
+import Predict from './components/Predict/Predict';
 
 function ScrollToTopOnMount() {
   const { pathname } = useLocation();

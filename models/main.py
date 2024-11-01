@@ -1,16 +1,24 @@
-# fastapi_backend.py
-
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware  # Import CORSMiddleware
 from pydantic import BaseModel
 import joblib
 import os
 import numpy as np
-
+# uvicorn main:app --host 0.0.0.0 --port 8000 --reload 
 # Initialize FastAPI app
 app = FastAPI()
 
+# Enable CORS for frontend integration
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # Adjust this to your frontend's URL if different
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # Define the model directory and paths
-model_dir = '/Users/hritikanand/Library/CloudStorage/OneDrive-SwinburneUniversity/Innovation/code/models'
+model_dir = '/Users/V/Documents/Github/Assignment-3---COS30049/models'
 rf_model_path = os.path.join(model_dir, 'rf_model.joblib')
 poly_model_path = os.path.join(model_dir, 'poly_model.joblib')
 gbr_model_path = os.path.join(model_dir, 'gbr_model.joblib')
@@ -51,6 +59,11 @@ def predict(input_data: InputData):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Prediction error: {str(e)}")
+
+# Optional root endpoint to avoid 404 error at "/"
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to the Prediction API"}
 
 # Run Uvicorn server for FastAPI
 if __name__ == "__main__":
