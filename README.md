@@ -166,5 +166,3 @@ This stack ensures a scalable, efficient application that combines an intuitive 
 
    
    
-
-
