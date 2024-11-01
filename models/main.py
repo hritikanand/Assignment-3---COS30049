@@ -19,14 +19,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Define the model directory and paths
+# Model directory and paths
 model_dir = '/Users/V/Documents/Github/Assignment-3---COS30049/models'
 rf_model_path = os.path.join(model_dir, 'rf_model.joblib')
 poly_model_path = os.path.join(model_dir, 'poly_model.joblib')
 gbr_model_path = os.path.join(model_dir, 'gbr_model.joblib')
 poly_transformer_path = os.path.join(model_dir, 'poly_features.joblib')
 
-# Load models with error handling
+# Error handling
 try:
     rf_model = joblib.load(rf_model_path)
     print("Random Forest model loaded successfully.")
@@ -48,7 +48,7 @@ except Exception as e:
     gbr_model = None
     print(f"Error loading Gradient Boosting model: {e}")
 
-# Load the polynomial features transformer if it was saved separately
+# Load the polynomial features transformer
 try:
     poly_transformer = joblib.load(poly_transformer_path)
     print("Polynomial transformer loaded successfully.")
@@ -56,7 +56,7 @@ except Exception as e:
     poly_transformer = None
     print(f"Error loading polynomial transformer: {e}")
 
-# Ensure all models are loaded
+# Check if all models are loaded
 if not all([rf_model, poly_model, gbr_model, poly_transformer]):
     raise RuntimeError("One or more models or transformers failed to load. Please check the paths and files.")
 
@@ -89,19 +89,23 @@ def predict(input_data: InputData):
         ]
         X_base = X_base[feature_order]
 
-        # polynomial transformation for polynomial model
         X_poly = poly_transformer.transform(X_base)
 
         # DEBUGGING Convert transformed features into a DataFrame
         X_poly_df = pd.DataFrame(X_poly)
         print("Input data after polynomial transformation:", X_poly_df)
 
-        # Apply polynomial transformation for polynomial model
-        X_poly = poly_transformer.transform(X_base)
-
         # Convert transformed features into a DataFrame for debugging
         X_poly_df = pd.DataFrame(X_poly)
         print("Transformed polynomial features (X_poly) summary:\n", X_poly_df.describe())
+
+        # Extract feature importances from Random Forest and Gradient Boosting
+        rf_feature_importances = dict(zip(feature_order, rf_model.feature_importances_))
+        gbr_feature_importances = dict(zip(feature_order, gbr_model.feature_importances_))
+
+        # For Polynomial Regression
+        poly_feature_importances = dict(zip(poly_transformer.get_feature_names_out(feature_order), poly_model.coef_))
+
 
         # predictions w. each model
         rf_prediction = rf_model.predict(X_base)  # Random Forest uses base features
@@ -112,14 +116,18 @@ def predict(input_data: InputData):
         return {
             "Random Forest Prediction": rf_prediction[0],
             "Polynomial Regression Prediction": poly_prediction[0],
-            "Gradient Boosting Prediction": gbr_prediction[0]
+            "Gradient Boosting Prediction": gbr_prediction[0],
+            "Feature Importances": {
+                "Random Forest": rf_feature_importances,
+                "Gradient Boosting": gbr_feature_importances,
+                "Polynomial Regression": poly_feature_importances,
+            }
         }
-
+    
     except Exception as e:
         print(f"Prediction error: {e}")
         raise HTTPException(status_code=500, detail=f"Prediction error: {str(e)}")
 
-# Optional root endpoint
 @app.get("/")
 def read_root():
     return {"message": "Welcome to the Prediction API"}
