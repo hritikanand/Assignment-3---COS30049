@@ -13,11 +13,11 @@
 
 
 <a name="project-overview"></a>
-## Overview
+## Overview :books:
 In a constantly evolving housing market, understanding current trends and future forecasts is essential for making informed decisions. HEM Housing, a web-based platform, is designed to empower homebuyers, investors, and real estate professionals by providing insightful visualizations and predictive analytics of Melbourne's housing market. Utilizing the power of machine learning, the platform forecasts property pricing trends and offers precise predictions for individual properties based on factors like distance from Melbourne’s Central Business District (CBD), number of bathrooms, and regional location.
 
 <a name="features"></a>
-## Features 
+## Features :sparkles:
 This project integrates a machine learning (ML) model with a React.js frontend to deliver a seamless user experience. Through the website, users can explore the following:
 
 - **Property Price Predictions:** On the **Predict page**, users can get personalized price predictions for properties in Melbourne by entering specific property attributes, such as distance from the CBD, number of bathrooms, and regional location.
@@ -26,7 +26,7 @@ This project integrates a machine learning (ML) model with a React.js frontend t
 
   
 <a name="tech"></a>
-## Tech Stack 
+## Tech Stack :hammer_and_wrench: 
 This project utilizes a blend of frontend and backend technologies to deliver an interactive and predictive web application for housing prices.
 
 - #### **Frontend**
@@ -47,7 +47,7 @@ This stack ensures a scalable, efficient application that combines an intuitive 
 
 
 <a name="setup"></a>
-## Setup Instructions 
+## Setup Instructions :gear:
 #### **Prerequisites**
 - Node.js (v20.18.0) and npm (v10.8.2) (no problem , instructions are provided below to get the 
   desired versions )
@@ -129,7 +129,7 @@ This stack ensures a scalable, efficient application that combines an intuitive 
 
    
 <a name="application"></a>
-## Running the Application
+## Running the Application :rocket:
 1. **Start Backend:** Ensure that the FastAPI server is running:
               
           uvicorn main:app --reload --host 0.0.0.0 --port 8000
@@ -147,14 +147,15 @@ This stack ensures a scalable, efficient application that combines an intuitive 
 
 
 <a name="trouble"></a>
-## Troubleshooting
+## Troubleshooting :stop_sign:
 - **Backend not starting**: Ensure all Python dependencies in requirements.txt are installed and the model_dir path is correct in main.py.
 - **Frontend not loading**: Double-check Node.js and npm versions. Re-run npm install in the hem-react-app directory if necessary(refer to step 3 in Setup Instructions).
 - **API not connecting to Frontend**: Ensure both servers are running on the correct ports(backend at 8000 and frontend generall at 3000) and that any CORS settings in FastAPI allow connections from the frontend.
 
+
   
 <a name="team"></a>
-## Contributors 
+## Contributors :busts_in_silhouette:
 - **Project Manager & Model Developer**: *Hritik Anand*
 - **Technical Implementation , UI/UX Designer & Evaluator**: *Eshita Mahajan and Michelle Abrigo*
           
