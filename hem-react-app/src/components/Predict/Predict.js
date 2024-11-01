@@ -1,12 +1,13 @@
 // src/components/Predict.js
 import React, { useState } from 'react';
-import { Box, TextField, Button, Typography } from '@mui/material';
+import { Box, TextField, Button, Typography, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 
 function Predict() {
   const [formData, setFormData] = useState({
     rooms: '',
     bathroom: '',
-    distanceFromCBD: ''
+    distanceFromCBD: '',
+    schoolingFacilities: ''
   });
   const [predictions, setPredictions] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -32,7 +33,8 @@ function Predict() {
         body: JSON.stringify({
           rooms: parseInt(formData.rooms),
           distance_from_cbd: parseFloat(formData.distanceFromCBD),
-          bathroom: parseInt(formData.bathroom)
+          bathroom: parseInt(formData.bathroom),
+          schooling_facilities: parseInt(formData.schoolingFacilities)
         })
       });
 
@@ -89,6 +91,26 @@ function Predict() {
             inputProps: { min: 1, max: 3 } // Cap bathrooms at 3
           }}
         />
+        
+        <FormControl fullWidth required>
+          <InputLabel>Region</InputLabel>
+          <Select
+            name="schoolingFacilities"
+            value={formData.schoolingFacilities}
+            onChange={handleChange}
+            label="Region"
+          >
+            <MenuItem value={202}>Eastern Metropolitan</MenuItem>
+            <MenuItem value={95}>Eastern Victoria</MenuItem>
+            <MenuItem value={239}>Northern Metropolitan</MenuItem>
+            <MenuItem value={36}>Northern Victoria</MenuItem>
+            <MenuItem value={185}>South-Eastern Metropolitan</MenuItem>
+            <MenuItem value={191}>Southern Metropolitan</MenuItem>
+            <MenuItem value={229}>Western Metropolitan</MenuItem>
+            <MenuItem value={21}>Western Victoria</MenuItem>
+          </Select>
+        </FormControl>
+
         <Button variant="contained" onClick={handlePredict} disabled={loading}>
           {loading ? 'Loading...' : 'Get Predictions'}
         </Button>

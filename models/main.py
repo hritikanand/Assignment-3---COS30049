@@ -65,6 +65,7 @@ class InputData(BaseModel):
     rooms: int
     distance_from_cbd: float
     bathroom: int
+    schooling_facilities: int
 
 @app.post("/predict")
 def predict(input_data: InputData):
@@ -74,7 +75,7 @@ def predict(input_data: InputData):
             "Rooms": input_data.rooms,
             "Bathroom": input_data.bathroom,            
             "Distance_from_CBD": input_data.distance_from_cbd,
-            "Schooling_Facilities": 1,  # Placeholder
+            "Schooling_Facilities": input_data.schooling_facilities,
             "Rooms_Bathroom_Interaction": input_data.rooms * input_data.bathroom,  # Interaction feature            
             "Distance_Schools_Interaction": input_data.distance_from_cbd,  # Placeholder           
             "Schools_Distance_Ratio": input_data.distance_from_cbd  # Placeholder
