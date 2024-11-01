@@ -1,10 +1,9 @@
 // src/components/Predict.js
 import React, { useState } from 'react';
-import { Box, TextField, Button, Typography, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { Box, TextField, Button, Typography } from '@mui/material';
 
 function Predict() {
   const [formData, setFormData] = useState({
-    region: '',
     rooms: '',
     bathroom: '',
     distanceFromCBD: ''
@@ -31,7 +30,6 @@ function Predict() {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          region: formData.region,
           rooms: parseInt(formData.rooms),
           distance_from_cbd: parseFloat(formData.distanceFromCBD),
           bathroom: parseInt(formData.bathroom)
@@ -58,21 +56,6 @@ function Predict() {
       </Typography>
 
       <Box component="form" sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-        <FormControl fullWidth required>
-          <InputLabel>Region</InputLabel>
-          <Select
-            name="region"
-            value={formData.region}
-            onChange={handleChange}
-            label="Region"
-          >
-            <MenuItem value="northern metropolitan">Northern Metropolitan</MenuItem>
-            <MenuItem value="western metropolitan">Western Metropolitan</MenuItem>
-            <MenuItem value="southern metropolitan">Southern Metropolitan</MenuItem>
-            <MenuItem value="eastern metropolitan">Eastern Metropolitan</MenuItem>
-          </Select>
-        </FormControl>
-
         <TextField
           label="Rooms"
           name="rooms"
