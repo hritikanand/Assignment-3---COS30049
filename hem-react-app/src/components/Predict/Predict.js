@@ -452,7 +452,7 @@ function Predict() {
             align="center" 
             sx={{ 
               marginTop: '120px',
-              marginBottom: '80px', 
+              marginBottom: '60px', 
               fontFamily: '"Roboto Condensed", sans-serif', 
               fontSize: '2.3rem',
               fontStyle: 'italic', 
@@ -465,7 +465,7 @@ function Predict() {
           <Grid container spacing={4}>
             <Grid item xs={12} md={6}>
               <Box sx={{ textAlign: 'center', mb: 2 }}>
-                <Typography variant="h6" sx={{ marginBottom: '10px' }}>
+                <Typography variant="h6" sx={{ marginBottom: '10px', fontFamily: '"Roboto Condensed", sans-serif', fontSize: '1.5rem'}}>
                   Price Prediction Trend (over Distance)
                 </Typography>
                 <Box sx={{ position: 'relative', height: '400px' }}>
@@ -481,7 +481,7 @@ function Predict() {
 
             <Grid item xs={12} md={6}>
               <Box sx={{ textAlign: 'center', mb: 2 }}>
-                <Typography variant="h6" sx={{ marginBottom: '10px' }}>
+                <Typography variant="h6" sx={{ marginBottom: '10px', fontFamily: '"Roboto Condensed", sans-serif', fontSize: '1.5rem'}}>
                   Model Comparison
                 </Typography>
                 <Box sx={{ position: 'relative', height: '400px' }}>
