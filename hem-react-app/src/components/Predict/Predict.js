@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, Grid, TextField, Button, Typography, FormControl, InputLabel, Select, MenuItem, Paper } from '@mui/material';
 import { Bar, Line, Pie } from 'react-chartjs-2';
 import 'chart.js/auto';
+import { Fade } from '@mui/material';
 
 function Predict() {
   const [formData, setFormData] = useState({
@@ -55,7 +56,7 @@ function Predict() {
     }
   };
 
-  // Data for the Bar Chart
+  // Data for Charts
   const barChartData = {
     labels: ['Random Forest', 'Polynomial Regression', 'Gradient Boosting'],
     datasets: [
@@ -71,7 +72,6 @@ function Predict() {
     ]
   };
 
-  // Data for the Line Chart (hypothetical trend over distance from CBD)
   const lineChartData = {
     labels: Array.from({ length: 10 }, (_, i) => `${i + 1} km`),
     datasets: [
@@ -84,7 +84,6 @@ function Predict() {
     ]
   };
 
-  // Data for the Pie Chart (Feature Importances)
   const pieChartData = {
     labels: featureImportances ? Object.keys(featureImportances[selectedModel]) : [],
     datasets: [
@@ -97,68 +96,217 @@ function Predict() {
   };
 
   return (
-    <Box sx={{ padding: '60px', maxWidth: '1500px', margin: '0 auto' }}>
-      <Typography variant="h4" gutterBottom align="center">
-        Predict Housing Prices
+    <Box sx={{ 
+      padding: '50px', 
+      maxWidth: '1500px', 
+      margin: '0 auto' 
+      }}>
+      <Typography variant="h4" gutterBottom align="center" sx={{ 
+        marginBottom: '50px', 
+        fontFamily: '"Roboto Condensed", sans-serif',
+        fontSize: '2.5rem'
+        }}>
+        Predict With Us
       </Typography>
 
-      <Grid container spacing={4} justifyContent="center" alignItems="center">
+      {/* Centered Container for Form and Results */}
+      <Grid container spacing={6} justifyContent="center" alignItems="flex-start">
         
-        {/* Form Section */}
-        <Grid item xs={12} md={predictions ? 4 : 8}>
+      {/* Form Container */}
+      <Grid item xs={12} md={5}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            textAlign: 'center', 
+          }}
+        >
+          {predictions && (
+            <Typography variant="h6" sx={{ 
+              marginBottom: '20px', 
+              fontFamily: '"Roboto Condensed", sans-serif',
+              fontSize: '1.5rem',
+              color: '#2F4F4F'
+              }}>
+              Have Different Features? Refine your Prediction!
+            </Typography>
+          )}
+          
           <Box
             component="form"
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              gap: 5,
-              backgroundColor: predictions ? '#f0f0f0' : 'transparent',
-              padding: predictions ? '45px' : '0',
-              borderRadius: predictions ? '10px' : '0',
+              gap: 3,
+              backgroundColor: predictions ? '#F5F5F5' : 'transparent',
+              padding: predictions ? '40px' : '0',
+              borderRadius: '10px',
               width: '100%',
-              maxWidth: {
-                xs: '90%',    // width for extra-small screens (phones)
-                sm: predictions ? '400px' : '600px',   // width for small screens (tablets)
-                md: predictions ? '500px' : '800px',   // width for medium screens (laptops)
-                lg: predictions ? '600px' : '900px'    // width for large screens (desktops)
-              },
-              margin: '0 auto'
+              maxWidth: '800px',
             }}
           >
-            <TextField
-              label="Rooms"
-              name="rooms"
-              value={formData.rooms}
-              onChange={handleChange}
-              type="number"
-              required
-              InputProps={{ inputProps: { min: 1, max: 5 } }}
-            />
-            <TextField
-              label="Distance from CBD (km)"
-              name="distanceFromCBD"
-              value={formData.distanceFromCBD}
-              onChange={handleChange}
-              type="number"
-              required
-              InputProps={{ inputProps: { min: 2.7, max: 24.7, step: 0.1 } }}
-            />
-            <TextField
-              label="Bathroom"
-              name="bathroom"
-              value={formData.bathroom}
-              onChange={handleChange}
-              type="number"
-              required
-              InputProps={{ inputProps: { min: 1, max: 3 } }}
-            />
-            <FormControl fullWidth required>
+            <TextField label="Rooms" 
+            name="rooms" 
+            value={formData.rooms} 
+            onChange={handleChange} 
+            sx={{ 
+              backgroundColor: 'white',
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderWidth: '3px', // thickness of the outline
+                  borderColor: '#CED1D6'
+                },
+                '&:hover fieldset': {
+                  borderWidth: '3px', //thickness on hover
+                  borderColor: '#2F4F4F', //color when hover
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: '#2F4F4F', //color when focused
+                  borderWidth: '3px', // thickness when focused
+                },
+              },
+              '& .MuiInputLabel-root': {
+                color: '#A3A7AF', // Default label color
+                fontWeight: 'bold',
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: '#2F4F4F', // Color when label is focused
+              }
+            }}            
+            InputLabelProps={{
+              style: {
+                fontWeight: 'bold',              
+              }
+            }}           
+            type="number" required InputProps={{ 
+              inputProps: { min: 1, max: 5 } 
+              }} 
+              />
+
+            <TextField label="Distance from CBD (km)" 
+            name="distanceFromCBD" 
+            value={formData.distanceFromCBD} 
+            onChange={handleChange} 
+            sx={{ 
+              backgroundColor: 'white',
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderWidth: '3px', 
+                  borderColor: '#CED1D6'
+                },
+                '&:hover fieldset': {
+                  borderWidth: '3px', 
+                  borderColor: '#2F4F4F', 
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: '#2F4F4F', 
+                  borderWidth: '3px', 
+                },
+              },
+              '& .MuiInputLabel-root': {
+                color: '#A3A7AF', // Default label color
+                fontWeight: 'bold',
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: '#2F4F4F', // Color when label is focused
+              }
+            }}            
+            InputLabelProps={{
+              style: {
+                fontWeight: 'bold',              
+              }
+            }}           
+            type="number" required InputProps={{ 
+              inputProps: { min: 2.7, max: 24.7, step: 0.1 } 
+              }} 
+              />
+
+            <TextField label="Bathroom" 
+            name="bathroom" 
+            value={formData.bathroom} 
+            onChange={handleChange} 
+            sx={{ 
+              backgroundColor: 'white',
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderWidth: '3px',
+                  borderColor: '#CED1D6'
+                },
+                '&:hover fieldset': {
+                  borderWidth: '3px', 
+                  borderColor: '#2F4F4F', 
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: '#2F4F4F', 
+                  borderWidth: '3px', 
+                },
+              },
+              '& .MuiInputLabel-root': {
+                color: '#A3A7AF', // Default label color
+                fontWeight: 'bold',
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: '#2F4F4F', // Color when label is focused
+              }
+            }}            
+            InputLabelProps={{
+              style: {
+                fontWeight: 'bold',              
+              }
+            }}
+            type="number" 
+            required 
+            InputProps={{ 
+              inputProps: { min: 1, max: 3 } 
+            }} 
+          />
+
+            <FormControl 
+              fullWidth 
+              required 
+              sx={{ 
+                backgroundColor: 'white', 
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderWidth: '3px', 
+                    borderColor: '#CED1D6' 
+                  },
+                  '&:hover fieldset': {
+                    borderWidth: '3px', 
+                    borderColor: '#2F4F4F' 
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderWidth: '3px', 
+                    borderColor: '#2F4F4F' 
+                  },
+                },
+                '& .MuiInputLabel-root': {
+                  color: '#A3A7AF', // Default label color
+                  fontWeight: 'bold',
+                },
+                '& .MuiInputLabel-root.Mui-focused': {
+                  color: '#2F4F4F', // Color when label is focused
+                }
+              }}            
+              InputLabelProps={{
+                style: {
+                  fontWeight: 'bold',              
+                }
+              }}
+            >
               <InputLabel>Region</InputLabel>
               <Select
                 name="schoolingFacilities"
                 value={formData.schoolingFacilities}
                 onChange={handleChange}
                 label="Region"
+                sx={{
+                  textAlign: 'left',
+                  '& .MuiSelect-select': {
+                    padding: '15px', 
+                  }
+                }}
               >
                 <MenuItem value={202}>Eastern Metropolitan</MenuItem>
                 <MenuItem value={95}>Eastern Victoria</MenuItem>
@@ -171,71 +319,90 @@ function Predict() {
               </Select>
             </FormControl>
 
-            <Button variant="contained" onClick={handlePredict} disabled={loading}>
+            <Button 
+              variant="contained" 
+              onClick={handlePredict} 
+              sx={{
+                backgroundColor: '#2F4F4F',
+                color: 'white',
+                fontWeight: 'bold',
+                padding: '12px 45px',
+                '&:hover': {
+                  backgroundColor: '#2F4F4F',
+                },
+              }}
+              disabled={loading}
+            >
               {loading ? 'Loading...' : 'Get Predictions'}
             </Button>
           </Box>
+        </Box>
+      </Grid>
 
-          {error && <Typography color="error" sx={{ marginTop: 2 }}>{error}</Typography>}
-        </Grid>
 
-        {/* Prediction Results */}
-        {predictions && (
-          <Grid item xs={12} md={8} container justifyContent="center">
-            <Box>
-              <Typography variant="h5" align="center"
-                sx={{ marginBottom: '20px'}}>
-
-                Prediction Results
-              </Typography>
-
-              <Grid container spacing={4} direction="column" alignItems="center">
-                <Grid item xs={12}>
-                  <Paper elevation={3} sx={{ 
-                    padding: '20px', 
-                    textAlign: 'center', 
-                    minWidth: '250px'              
+      {/* Prediction Results Container */}
+      {predictions && (
+        <Grid item xs={12} md={5}>
+          <Box>
+            <Typography variant="h6" align="center" sx={{ 
+              marginBottom: '20px', 
+              fontFamily: '"Roboto Condensed", sans-serif',
+              fontSize: '1.5rem',
+              color: '#2F4F4F'                
+            }}>
+              Prediction Results
+            </Typography>
+            
+            <Grid container spacing={2} direction="column" alignItems="stretch" sx={{ 
+              width: '100%', 
+              maxWidth: '600px', 
+              margin: '0 auto', 
+              mt: 5
+            }}
+            >                 
+              {['Random Forest', 'Polynomial Regression', 'Gradient Boosting'].map((model, idx) => (
+                <Fade
+                  in={true}
+                  timeout={(idx + 1) * 500} // For cascading effect on prices
+                  key={`${model}-${JSON.stringify(predictions)}`} // Unique key to trigger restarting animation
+                >
+                  <Grid item xs={12}>
+                    <Paper elevation={3} sx={{ 
+                      padding: '20px', 
+                      textAlign: 'center', 
+                      backgroundColor: '#2F4F4F'
                     }}>
-                    <Typography variant="h6">Random Forest</Typography>
-                    <Typography>${predictions["Random Forest Prediction"].toFixed(2)}</Typography>
-                  </Paper>
-                </Grid>
-
-                <Grid item xs={12}>
-                  <Paper elevation={3} sx={{ 
-                    padding: '20px', 
-                    textAlign: 'center', 
-                    minWidth: '250px' }}>
-                    <Typography variant="h6">Polynomial Regression</Typography>
-                    <Typography>${predictions["Polynomial Regression Prediction"].toFixed(2)}</Typography>
-                  </Paper>
-                </Grid>
-
-                <Grid item xs={12}>
-                  <Paper elevation={3} sx={{ 
-                    padding: '20px', 
-                    textAlign: 'center', 
-                    minWidth: '250px' }}>
-                    <Typography variant="h6">Gradient Boosting</Typography>
-                    <Typography>${predictions["Gradient Boosting Prediction"].toFixed(2)}</Typography>
-                  </Paper>
-                </Grid>
-              </Grid>
-            </Box>
-          </Grid>
-        )}
+                      <Typography variant="h6" sx={{ 
+                        color: 'white',
+                        fontFamily: '"Roboto Condensed", sans-serif',
+                        fontSize: '1.5rem' 
+                      }}>
+                        {model}
+                      </Typography>
+                      
+                      <Typography variant="h5" sx={{ 
+                        color: 'white',
+                        fontFamily: '"Roboto Condensed", sans-serif',
+                        fontSize: '1.5rem' 
+                      }}>
+                        ${predictions[`${model} Prediction`].toFixed(2)}
+                      </Typography>
+                    </Paper>
+                  </Grid>
+                </Fade>
+              ))}
+            </Grid>
+          </Box>
+        </Grid>
+      )}
       </Grid>
 
       {/* Charts Section */}
       {predictions && (
-        <Box sx={{ marginTop: '40px' }}>
+        <Box sx={{ marginTop: '100px' }}>
           <FormControl fullWidth sx={{ marginBottom: 4 }}>
             <InputLabel>Feature Importance for Model</InputLabel>
-            <Select
-              value={selectedModel}
-              onChange={(e) => setSelectedModel(e.target.value)}
-              label="Feature Importance for Model"
-            >
+            <Select value={selectedModel} onChange={(e) => setSelectedModel(e.target.value)} label="Feature Importance for Model">
               <MenuItem value="Random Forest">Random Forest</MenuItem>
               <MenuItem value="Gradient Boosting">Gradient Boosting</MenuItem>
               <MenuItem value="Polynomial Regression">Polynomial Regression</MenuItem>
