@@ -20,7 +20,7 @@ app.add_middleware(
 )
 
 # Model directory and paths
-model_dir = '/Users/V/Documents/Github/Assignment-3---COS30049/models'
+model_dir = '/Users/V/Documents/Github/Assignment-3---COS30049/models' # THIS NEEDS TO BE CHANGED TO SPECIFIC DIR OF REPO
 rf_model_path = os.path.join(model_dir, 'rf_model.joblib')
 poly_model_path = os.path.join(model_dir, 'poly_model.joblib')
 gbr_model_path = os.path.join(model_dir, 'gbr_model.joblib')
@@ -82,7 +82,7 @@ def predict(input_data: InputData):
             "Schools_Distance_Ratio": input_data.schooling_facilities / (input_data.distance_from_cbd + 1) 
         }])
 
-        #THIS NEEDS TO BE IN THE EXACT ORDER THAT THE MODEL WAS TRAINED
+        # THIS NEEDS TO BE IN THE EXACT ORDER THAT THE MODEL WAS TRAINED
         feature_order = [
             "Rooms", "Bathroom", "Distance_from_CBD", "Schooling_Facilities",
             "Rooms_Bathroom_Interaction", "Distance_Schools_Interaction", "Schools_Distance_Ratio"
@@ -107,12 +107,12 @@ def predict(input_data: InputData):
         poly_feature_importances = dict(zip(poly_transformer.get_feature_names_out(feature_order), poly_model.coef_))
 
 
-        # predictions w. each model
+        # Predictions w. each model
         rf_prediction = rf_model.predict(X_base)  # Random Forest uses base features
         poly_prediction = poly_model.predict(X_poly)  # Polynomial model uses expanded features
         gbr_prediction = gbr_model.predict(X_base)  # Gradient Boosting uses base features
 
-        # Return predictions in a structured response
+
         return {
             "Random Forest Prediction": rf_prediction[0],
             "Polynomial Regression Prediction": poly_prediction[0],
