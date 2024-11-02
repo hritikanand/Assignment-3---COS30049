@@ -59,7 +59,7 @@ This stack ensures a scalable, efficient application that combines an intuitive 
     cd your-repository //folder where the repository was clonned 
 
 #### Step 2 : **Setting up the backend**
-1.##### **Install Python Dependencies**
+1. ##### **Install Python Dependencies**
    Install the recquried python dependencoes using the recquirements.txt diresctly using the following code snippet.
    
         pip install -r recquirements.txt
