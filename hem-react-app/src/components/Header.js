@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -20,6 +20,7 @@ function Header({ contactRef }) {
   const navigate = useNavigate();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState(location.pathname);
 
   const handleDialogOpen = () => {
     setDialogOpen(true);
@@ -32,24 +33,26 @@ function Header({ contactRef }) {
   const handleContactClick = () => {
     if (location.pathname === '/') {
       setDrawerOpen(false);
+      setActiveTab('/contact'); // Set contact as active
       contactRef?.current?.scrollIntoView({ behavior: 'smooth' });
     } else {
+      setActiveTab('/contact');
       navigate('/', { state: { scrollToContact: true } });
       setDrawerOpen(false);
     }
   };
 
-  // Define toggleDrawer function here
+  const handleNavigation = (path) => {
+    setActiveTab(path);
+    navigate(path);
+    setDrawerOpen(false);
+  };
+
   const toggleDrawer = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
     setDrawerOpen(open);
-  };
-
-  const handleNavigation = (path) => {
-    navigate(path);
-    setDrawerOpen(false);
   };
 
   return (
@@ -62,18 +65,16 @@ function Header({ contactRef }) {
           alignItems: 'center',
         }}
       >
-        {/* Hamburger Menu Icon (Left-Aligned for small screens) */}
         <IconButton
           edge="start"
           color="inherit"
           aria-label="menu"
           onClick={toggleDrawer(true)}
-          sx={{ display: { xs: 'block', md: 'none' }, mr: 1, ml: 0, color: 'black' }} // Ensure color is black
+          sx={{ display: { xs: 'block', md: 'none' }, mr: 1, ml: 0, color: 'black' }}
         >
           <MenuIcon />
         </IconButton>
 
-        {/* Logo and Title (Centered for Small Screens) */}
         <Box
           sx={{
             display: 'flex',
@@ -86,7 +87,7 @@ function Header({ contactRef }) {
             edge="start"
             color="inherit"
             aria-label="logo"
-            onClick={() => navigate('/')}
+            onClick={() => handleNavigation('/')}
             sx={{
               p: 0,
               '&:hover': { backgroundColor: 'transparent' },
@@ -112,7 +113,6 @@ function Header({ contactRef }) {
           </Typography>
         </Box>
 
-        {/* Navigation Links for Large Screens */}
         <Box
           sx={{
             display: { xs: 'none', md: 'flex' },
@@ -126,34 +126,31 @@ function Header({ contactRef }) {
           }}
         >
           <Button
-            component={Link}
-            to="/"
+            onClick={() => handleNavigation('/')}
             sx={{
               ...buttonStyles,
-              backgroundColor: location.pathname === '/' ? '#2F4F4F' : 'transparent',
-              color: location.pathname === '/' ? 'white' : '#333',
+              backgroundColor: activeTab === '/' ? '#2F4F4F' : 'transparent',
+              color: activeTab === '/' ? 'white' : '#333',
             }}
           >
             Home
           </Button>
           <Button
-            component={Link}
-            to="/about"
+            onClick={() => handleNavigation('/about')}
             sx={{
               ...buttonStyles,
-              backgroundColor: location.pathname === '/about' ? '#2F4F4F' : 'transparent',
-              color: location.pathname === '/about' ? 'white' : '#333',
+              backgroundColor: activeTab === '/about' ? '#2F4F4F' : 'transparent',
+              color: activeTab === '/about' ? 'white' : '#333',
             }}
           >
             About
           </Button>
           <Button
-            component={Link}
-            to="/predict"
+            onClick={() => handleNavigation('/predict')}
             sx={{
               ...buttonStyles,
-              backgroundColor: location.pathname === '/predict' ? '#2F4F4F' : 'transparent',
-              color: location.pathname === '/predict' ? 'white' : '#333',
+              backgroundColor: activeTab === '/predict' ? '#2F4F4F' : 'transparent',
+              color: activeTab === '/predict' ? 'white' : '#333',
             }}
           >
             Predict
@@ -162,15 +159,14 @@ function Header({ contactRef }) {
             onClick={handleContactClick}
             sx={{
               ...buttonStyles,
-              backgroundColor: location.pathname === '/' && location.state?.scrollToContact ? '#2F4F4F' : 'transparent',
-              color: location.pathname === '/' && location.state?.scrollToContact ? 'white' : '#333',
+              backgroundColor: activeTab === '/contact' ? '#2F4F4F' : 'transparent',
+              color: activeTab === '/contact' ? 'white' : '#333',
             }}
           >
             Contact
           </Button>
         </Box>
 
-        {/* Sign In/Sign Up Button */}
         <Button
           variant="outlined"
           color="inherit"
@@ -181,7 +177,6 @@ function Header({ contactRef }) {
         </Button>
       </Toolbar>
 
-      {/* Mobile Drawer Menu */}
       <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 1 }}>
           <IconButton onClick={toggleDrawer(false)}>
@@ -189,16 +184,16 @@ function Header({ contactRef }) {
           </IconButton>
         </Box>
         <List sx={{ width: 250 }}>
-          <ListItem button onClick={() => handleNavigation('/')} sx={drawerItemStyles(location.pathname === '/')}>
+          <ListItem button onClick={() => handleNavigation('/')} sx={drawerItemStyles(activeTab === '/')}>
             <ListItemText primary="Home" />
           </ListItem>
-          <ListItem button onClick={() => handleNavigation('/about')} sx={drawerItemStyles(location.pathname === '/about')}>
+          <ListItem button onClick={() => handleNavigation('/about')} sx={drawerItemStyles(activeTab === '/about')}>
             <ListItemText primary="About" />
           </ListItem>
-          <ListItem button onClick={() => handleNavigation('/predict')} sx={drawerItemStyles(location.pathname === '/predict')}>
+          <ListItem button onClick={() => handleNavigation('/predict')} sx={drawerItemStyles(activeTab === '/predict')}>
             <ListItemText primary="Predict" />
           </ListItem>
-          <ListItem button onClick={() => { handleContactClick(); setDrawerOpen(false); }} sx={drawerItemStyles(location.state?.scrollToContact)}>
+          <ListItem button onClick={() => { handleContactClick(); setDrawerOpen(false); }} sx={drawerItemStyles(activeTab === '/contact')}>
             <ListItemText primary="Contact" />
           </ListItem>
           <ListItem button onClick={handleDialogOpen}>
@@ -207,13 +202,11 @@ function Header({ contactRef }) {
         </List>
       </Drawer>
 
-      {/* Sign In/Sign Up Dialog */}
       <Dialog open={dialogOpen} onClose={handleDialogClose} />
     </AppBar>
   );
 }
 
-// Common button styles for large screen
 const buttonStyles = {
   fontFamily: '"Roboto Condensed", sans-serif',
   fontWeight: 'bold',
@@ -225,7 +218,6 @@ const buttonStyles = {
   minWidth: '150px',
 };
 
-// Drawer item styles with hover and active color
 const drawerItemStyles = (isActive) => ({
   color: isActive ? 'green' : 'inherit',
   '&:hover': { color: 'green' },
