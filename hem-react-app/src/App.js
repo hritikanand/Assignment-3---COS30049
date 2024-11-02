@@ -7,22 +7,8 @@ import HomeSection from './components/Home/HomeSection';
 import TeamSection from './components/Home/TeamSection';
 import ContactSection from './components/Home/ContactSection';
 import About from './components/About/AboutSection';
-
-const Predict = () => (
-  <div style={{ padding: '60px', textAlign: 'center' }}>
-    <h2>Predict Page</h2>
-  </div>
-);
-
-function ScrollToTopOnMount() {
-  const { pathname } = useLocation();
-
-  useEffect(() => {
-    window.scrollTo(0, 0); // Scroll to the top of the page on component mount or route change
-  }, [pathname]);
-
-  return null;
-}
+import Predict from './components/Predict/Predict';
+import Box from '@mui/material/Box';
 
 function ScrollToContact({ contactRef }) {
   const location = useLocation();
@@ -36,36 +22,61 @@ function ScrollToContact({ contactRef }) {
   return null;
 }
 
+// Function to scroll to top when navigating to home
+function ScrollToTopOnHomeClick() {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === '/') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [location]);
+
+  return null;
+}
+
 function App() {
   const contactRef = useRef(null);
 
   return (
     <Router>
-      <div>
+      {/* Main container with full height to ensure footer is pushed to the bottom */}
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: '100vh',
+        }}
+      >
         <Header contactRef={contactRef} />
-        <ScrollToTopOnMount /> {/* This will ensure the page loads from the top on each route */}
 
-        <Routes>
-          {/* Home Page with Contact Ref and Scroll Logic */}
-          <Route
-            path="/"
-            element={
-              <div>
-                <HomeSection />
-                <TeamSection />
-                <div id="contact-section" ref={contactRef}>
-                  <ContactSection />
-                </div>
-              </div>
-            }
-          />
-          <Route path="/about" element={<About />} />
-          <Route path="/predict" element={<Predict />} />
-        </Routes>
-
+        {/* Scroll handlers */}
+        <ScrollToTopOnHomeClick />
         <ScrollToContact contactRef={contactRef} />
+
+        {/* Main content area */}
+        <Box component="main" sx={{ flexGrow: 1 }}>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <div>
+                  <HomeSection />
+                  <TeamSection />
+                  <div id="contact-section" ref={contactRef}>
+                    <ContactSection />
+                  </div>
+                </div>
+              }
+            />
+            <Route path="/about" element={<About />} />
+            <Route path="/predict" element={<Predict />} />
+          </Routes>
+        </Box>
+
+        {/* Footer at the bottom */}
         <Footer />
-      </div>
+      </Box>
     </Router>
   );
 }
