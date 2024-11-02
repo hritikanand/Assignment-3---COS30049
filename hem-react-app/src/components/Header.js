@@ -128,7 +128,7 @@ function Header({ contactRef }) {
               gap: 3.9,
               flexGrow: 1,
               maxWidth: '700px',
-              paddingLeft: { xs: '5px', sm: '20px', md: '30px' },  // Adjust paddingLeft based on screen size
+              paddingLeft: { xs: '5px', sm: '20px', md: '1px' },  // Adjust paddingLeft based on screen size
               marginLeft: { xs: '0', sm: '10px', md: '80px' },      // Shift right on larger screens
             }}
           >
