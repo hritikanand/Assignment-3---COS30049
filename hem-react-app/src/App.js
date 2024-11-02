@@ -9,16 +9,6 @@ import ContactSection from './components/Home/ContactSection';
 import About from './components/About/AboutSection';
 import Predict from './components/Predict/Predict';
 
-function ScrollToTopOnMount() {
-  const { pathname } = useLocation();
-
-  useEffect(() => {
-    window.scrollTo(0, 0); // Scroll to the top of the page on component mount or route change
-  }, [pathname]);
-
-  return null;
-}
-
 function ScrollToContact({ contactRef }) {
   const location = useLocation();
 
@@ -31,6 +21,19 @@ function ScrollToContact({ contactRef }) {
   return null;
 }
 
+// Function to scroll to top when navigating to home
+function ScrollToTopOnHomeClick() {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === '/') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [location]);
+
+  return null;
+}
+
 function App() {
   const contactRef = useRef(null);
 
@@ -38,10 +41,8 @@ function App() {
     <Router>
       <div>
         <Header contactRef={contactRef} />
-        <ScrollToTopOnMount /> {/* This will ensure the page loads from the top on each route */}
-
+        <ScrollToTopOnHomeClick /> {/* Ensures page scrolls to top on Home click */}
         <Routes>
-          {/* Home Page with Contact Ref and Scroll Logic */}
           <Route
             path="/"
             element={
