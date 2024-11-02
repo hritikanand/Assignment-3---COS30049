@@ -113,6 +113,7 @@ This stack ensures a scalable, efficient application that combines an intuitive 
           
            # mui components install statements 
            npm install @mui/material @emotion/react @emotion/styled @mui/icons-material
+           npm install react-responsive
            npm install react-router-dom
            
 5. ##### **Install Charting Libraries:**
