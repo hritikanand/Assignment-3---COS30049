@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import { Box, Grid, TextField, Button, Typography, FormControl, InputLabel, Select, MenuItem, Paper } from '@mui/material';
 import { Bar, Line, Pie } from 'react-chartjs-2';
+import SchoolIcon from '@mui/icons-material/School';
+import BathtubIcon from '@mui/icons-material/Bathtub';
+import LocationCityIcon from '@mui/icons-material/LocationCity';
+import { Chart as ChartJS, Tooltip, Legend, ArcElement } from 'chart.js';
 import 'chart.js/auto';
 import { Fade } from '@mui/material';
+
+
 
 function Predict() {
   const [formData, setFormData] = useState({
@@ -84,15 +90,54 @@ function Predict() {
     ]
   };
 
+  ChartJS.register(Tooltip, Legend, ArcElement);
+
+  const pieChartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: {
+          font: {
+            family: '"Roboto Condensed", sans-serif',
+            size: 14,
+          },
+          color: '#4A4A4A',
+        },
+      },
+      tooltip: {
+        callbacks: {
+          label: function(context) {
+            let label = context.label || '';
+            let value = context.raw;
+            let total = context.chart._metasets[context.datasetIndex].total;
+            let percentage = ((value / total) * 100).toFixed(1) + '%';
+            return `${label}: ${percentage}`;
+          },
+        },
+        backgroundColor: '#2F4F4F',
+        titleFont: { size: 14 },
+        bodyFont: { size: 14 },
+        padding: 10,
+        borderColor: '#ffffff',
+        borderWidth: 2,
+      },
+    },
+    cutout: '40%',
+  };
+
+
   const pieChartData = {
     labels: featureImportances ? Object.keys(featureImportances[selectedModel]) : [],
     datasets: [
       {
         label: 'Feature Importance',
         data: featureImportances ? Object.values(featureImportances[selectedModel]) : [],
-        backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56', '#4bc0c0', '#9966ff', '#ff9f40']
-      }
-    ]
+        backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56', '#4bc0c0', '#9966ff', '#ff9f40'],
+        borderColor: '#FFFFFF',
+        borderWidth: 2
+      },
+    ],
   };
 
   return (
@@ -399,27 +444,195 @@ function Predict() {
 
       {/* Charts Section */}
       {predictions && (
-        <Box sx={{ marginTop: '100px' }}>
-          <FormControl fullWidth sx={{ marginBottom: 4 }}>
+        <Box sx={{ marginTop: '50px' }}>
+          <Grid container spacing={4}>
+            <Grid item xs={12} md={6}>
+              <Box sx={{ textAlign: 'center', mb: 2 }}>
+                <Typography variant="h6" sx={{ marginBottom: '10px' }}>
+                  Price Prediction Trend (over Distance)
+                </Typography>
+                <Box sx={{ position: 'relative', height: '400px' }}>
+                  <Line data={lineChartData} options={{ responsive: true, maintainAspectRatio: false }} />
+                </Box>
+              </Box>
+              <Paper elevation={3} sx={{ padding: 2, marginTop: 2, backgroundColor: '#9fb3ac' }}>
+                <Typography variant="body2" sx={{ padding: 3, color: 'black', fontSize: '1rem' }}>
+                  This chart demonstrates the trend of property prices as they stem further away from the CBD of Victoria.
+                </Typography>
+              </Paper>
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <Box sx={{ textAlign: 'center', mb: 2 }}>
+                <Typography variant="h6" sx={{ marginBottom: '10px' }}>
+                  Model Comparison
+                </Typography>
+                <Box sx={{ position: 'relative', height: '400px' }}>
+                  <Bar data={barChartData} options={{ responsive: true, maintainAspectRatio: false }} />
+                </Box>
+              </Box>
+              <Paper elevation={3} sx={{ padding: 2, marginTop: 2, backgroundColor: '#9fb3ac' }}>
+                <Typography variant="body2" sx={{ padding: 3, color: 'black', fontSize: '1rem' }}>
+                  This bar chart compares predictions across the three different models, aiming to illustrate the range of price estimates generated for the parameters that have been selected.
+                </Typography>
+            </Paper>
+          </Grid>
+
+          </Grid>
+
+          <FormControl
+            fullWidth
+            sx={{
+              marginBottom: -3,
+              marginTop: 10,
+              backgroundColor: 'white',
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': { borderWidth: '3px', borderColor: '#CED1D6' },
+                '&:hover fieldset': { borderWidth: '3px', borderColor: '#2F4F4F' },
+                '&.Mui-focused fieldset': { borderWidth: '3px', borderColor: '#2F4F4F' },
+              },
+              '& .MuiInputLabel-root': {
+                color: '#A3A7AF', fontWeight: 'bold',
+              },
+              '& .MuiInputLabel-root.Mui-focused': { color: '#2F4F4F' },
+            }}
+          >      
             <InputLabel>Feature Importance for Model</InputLabel>
-            <Select value={selectedModel} onChange={(e) => setSelectedModel(e.target.value)} label="Feature Importance for Model">
+            <Select 
+              value={selectedModel} 
+              onChange={(e) => setSelectedModel(e.target.value)} 
+              label="Feature Importance for Model"
+            >
               <MenuItem value="Random Forest">Random Forest</MenuItem>
               <MenuItem value="Gradient Boosting">Gradient Boosting</MenuItem>
               <MenuItem value="Polynomial Regression">Polynomial Regression</MenuItem>
             </Select>
           </FormControl>
-          <Grid container spacing={4}>
-            <Grid item xs={12} md={6}>
-              <Typography variant="h6" align="center">Feature Importance - {selectedModel}</Typography>
-              <Pie data={pieChartData} options={{ responsive: true }} />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Typography variant="h6" align="center">Model Comparison</Typography>
-              <Bar data={barChartData} options={{ responsive: true }} />
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant="h6" align="center">Price Prediction Trend (over Distance)</Typography>
-              <Line data={lineChartData} options={{ responsive: true }} />
+
+          <Typography variant="h6" sx={{ 
+            marginTop: '60px', 
+            marginBottom: '10px', 
+            textAlign: 'center',
+            fontFamily: '"Roboto Condensed", sans-serif',
+            fontSize: '2.5rem',
+            fontStyle: 'italic', 
+            color: '#2F4F4F'
+            }}>
+              Feature Weighing - {selectedModel}
+            </Typography>
+
+            <Grid container spacing={4} sx={{ marginTop: '50px' }}>
+              {/* Responsive Pie Chart Container */}
+              <Grid item xs={12} md={6}>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: '100%',
+                    padding: 2,
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: { xs: '80%', sm: '80%', md: '70%', lg: '60%' },  // Responsive width for different screen sizes
+                      maxWidth: '600px',  // Prevent overflow on very large screens
+                      minWidth: '250px',  // Ensure visibility on smaller screens
+                      aspectRatio: '1',   // Keeps the aspect ratio 1:1 for a square shape
+                    }}
+                  >
+                    <Pie data={pieChartData} options={{ responsive: true, maintainAspectRatio: false }} />
+                  </Box>
+                </Box>
+              </Grid>
+
+          {/* Information Container Next to Pie Chart */}
+          <Grid item xs={12} md={6}>
+            <Typography variant="h6" sx={{ marginBottom: '10px', textAlign: 'left', fontFamily: '"Roboto Condensed", sans-serif', fontSize: '2rem' }}>
+              How are the Prices Evaluated?
+            </Typography>
+            <Paper elevation={3} sx={{ padding: 3, textAlign: 'left' }}>
+              {/* Room Icon and Text */}
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', color: '#6b6b6b', mb: 2 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <SchoolIcon sx={{ fontSize: '40px', mr: 1 }} />
+                  <Typography variant="body2" sx={{ fontSize: '1.5rem', fontWeight: 'bold', fontFamily: '"Roboto Condensed", sans-serif' }}>
+                    Schooling Facilities
+                  </Typography>
+                </Box>
+                <Typography variant="body2" sx={{ fontSize: '1rem', color: '#8a8a8a', fontFamily: '"Roboto", sans-serif', ml: '48px' }}>
+                  Schooling facilities is one of the primary features that are weighed in the model's predictive process. This is inputted by the user through the selection of Region.
+                </Typography>
+              </Box>
+
+
+                {/* Bathroom Icon and Text */}
+                <Box sx={{ 
+                    display: 'flex', 
+                    flexDirection: 'column', // Stack items vertically
+                    alignItems: 'flex-start', 
+                    color: '#6b6b6b',
+                    mb: 2 // Add some bottom margin if needed
+                  }}>
+                    {/* Icon and Main Label */}
+                    <Box sx={{ 
+                      display: 'flex', 
+                      alignItems: 'center' 
+                    }}>
+                      <BathtubIcon sx={{ fontSize: '40px', mr: 1 }} />
+                      <Typography variant="body2" sx={{
+                        fontSize: '1.5rem',
+                        fontWeight: 'bold',
+                        fontFamily: '"Roboto Condensed", sans-serif'
+                      }}>
+                        Rooms & Bathrooms
+                      </Typography>
+                    </Box>
+                    
+                    {/* Additional Explanation Text */}
+                    <Typography variant="body2" sx={{
+                      fontSize: '1rem',
+                      color: '#8a8a8a', 
+                      fontFamily: '"Roboto", sans-serif',
+                      ml: '48px' 
+                    }}>
+                      This indicates the number of bedrooms and bathrooms within the property.
+                  </Typography>
+                </Box>
+                    {/* Bathroom Icon and Text */}
+                    <Box sx={{ 
+                    display: 'flex', 
+                    flexDirection: 'column', // Stack items vertically
+                    alignItems: 'flex-start', 
+                    color: '#6b6b6b',
+                    mb: 2 // Add some bottom margin if needed
+                  }}>
+                    {/* Icon and Main Label */}
+                    <Box sx={{ 
+                      display: 'flex', 
+                      alignItems: 'center' 
+                    }}>
+                      <LocationCityIcon sx={{ fontSize: '40px', mr: 1 }} />
+                      <Typography variant="body2" sx={{
+                        fontSize: '1.5rem',
+                        fontWeight: 'bold',
+                        fontFamily: '"Roboto Condensed", sans-serif'
+                      }}>
+                        Distance from CBD
+                      </Typography>
+                    </Box>
+                    
+                    {/* Additional Explanation Text */}
+                    <Typography variant="body2" sx={{
+                      fontSize: '1rem',
+                      color: '#8a8a8a', 
+                      fontFamily: '"Roboto", sans-serif',
+                      ml: '48px' 
+                    }}>
+                      The distance from the property to the CBD typically conflates prices. However, it is important to note that further distance typically suggests lower prices, but are more likely to contain more rooms and bathrooms than properties closer to the CBD. This is due to properties closer to the CBD are more often units and apartments rather than large residential homes.
+                  </Typography>
+                </Box>
+              </Paper>
             </Grid>
           </Grid>
         </Box>
