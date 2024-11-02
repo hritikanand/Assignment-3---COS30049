@@ -59,17 +59,17 @@ This stack ensures a scalable, efficient application that combines an intuitive 
     cd your-repository //folder where the repository was clonned 
 
 #### Step 2 : **Setting up the backend**
-1. ##### **Navigate to the Project Directory:**
+1.##### **Install Python Dependencies**
+   Install the recquried python dependencoes using the recquirements.txt diresctly using the following code snippet.
+   
+        pip install -r recquirements.txt
+2. ##### **Navigate to the Project Directory:**
    Firstly, navigate to the root of your project where main.py and the models directory are located.
    
         cd path/to/your-repositry/models
         // replace this(path/to/your-repositry/) with the actual repositry path 
-   
                                             
-2. ##### **Install Python Dependencies**
-   Install the recquried python dependencoes using the recquirements.txt diresctly using the following code snippet.
    
-        pip install -r requirements.txt
 
    
 3. #####  **Set the Model Directory Path:**
