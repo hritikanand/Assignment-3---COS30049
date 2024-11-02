@@ -124,10 +124,12 @@ function Header({ contactRef }) {
               justifyContent: 'center',
               backgroundColor: '#e4e9ec',
               borderRadius: '50px',
-              padding: '0 20px',
-              gap: 2,
+              padding: '0 1px',
+              gap: 3.9,
               flexGrow: 1,
               maxWidth: '700px',
+              paddingLeft: { xs: '5px', sm: '20px', md: '30px' },  // Adjust paddingLeft based on screen size
+              marginLeft: { xs: '0', sm: '10px', md: '80px' },      // Shift right on larger screens
             }}
           >
             <Button
