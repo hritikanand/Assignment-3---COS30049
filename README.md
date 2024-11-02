@@ -69,7 +69,7 @@ This stack ensures a scalable, efficient application that combines an intuitive 
 2. ##### **Install Python Dependencies**
    Install the recquried python dependencoes using the recquirements.txt diresctly using the following code snippet.
    
-        pip install -r requirements.txt
+        pip install -r recquirements.txt
 
    
 3. #####  **Set the Model Directory Path:**
