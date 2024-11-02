@@ -49,7 +49,7 @@ This stack ensures a scalable, efficient application that combines an intuitive 
 <a name="setup"></a>
 ## Setup Instructions :gear:
 #### **Prerequisites**
-- Node.js (v20.18.0) and npm (v10.8.2) (no problem , instructions are provided below to get the 
+- Node.js (v20.18.0) and npm (v10.9.0) (no problem , instructions are provided below to get the 
   desired versions )
 - Python (v3.12.7)
 - Git for cloning the repository
@@ -92,11 +92,11 @@ This stack ensures a scalable, efficient application that combines an intuitive 
 
 #### Step 2 : **Frontend Setup**   
 1. ##### **Navigate to the React App Directroy:**
- Once you are done setting up the FastAPI server navigate to the React App directory in the repositry.
+ Once you are done setting up the FastAPI server navigate to the React App directory in the repositry using Windows PowerShell.
    
            cd hem-react-app
 2. ##### **Install Node.js (via Fast Node Manager)**:
-   Fast Node Manager (FNM) is used to manage Node.js versions. Run the following commands to install FNM and configure the required Node.js version.
+   Fast Node Manager (FNM) is used to manage Node.js versions. Run the following commands to install FNM and configure the required Node.js version these commands are for windows operating system .
    
            winget install Schniz.fnm  # installs fnm (Fast Node Manager)
            fnm env --use-on-cd | Out-String | Invoke-Expression # configure fnm environment
@@ -106,7 +106,7 @@ This stack ensures a scalable, efficient application that combines an intuitive 
    Confirm the correct versions of Node and npm are installed, ensuring compatibility with your application.
    
            node -v  # Should output v20.18.0
-           npm -v   # Should output 10.8.2
+           npm -v   # Should output v10.9.0
    
 4. ###### **Install React Dependencies:**
   Set up essential dependencies for Material-UI components and routing that offer different functionalities in the HEM housing website.
@@ -151,9 +151,7 @@ This stack ensures a scalable, efficient application that combines an intuitive 
 ## Troubleshooting :stop_sign:
 - **Backend not starting**: Ensure all Python dependencies in requirements.txt are installed and the model_dir path is correct in main.py.
 - **Frontend not loading**: Double-check Node.js and npm versions. Re-run npm install in the hem-react-app directory if necessary(refer to step 3 in Setup Instructions).
-- **API not connecting to Frontend**: Ensure both servers are running on the correct ports(backend at 8000 and frontend generall at 3000) and that any CORS settings in FastAPI allow connections from the frontend.
-
-
+- **API not connecting to Frontend**: Ensure both servers are running on the correct ports(backend at 8000 and frontend at 3000 )and that any CORS settings in FastAPI allow connections from the frontend. for frontend if you encounter a port issue try running the react app using Windows Powershell. 
   
 <a name="team"></a>
 ## Contributors :busts_in_silhouette:
