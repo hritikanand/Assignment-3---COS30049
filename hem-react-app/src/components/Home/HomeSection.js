@@ -204,7 +204,9 @@ function HomeSection() {
               sx={{
                 fontSize: { xs: '2rem', sm: '3rem' },
                 fontWeight: 700 , // Set bold for small screens
-                fontFamily: '"Roboto Condensed", sans-serif', 
+                fontFamily: '"Roboto Condensed", sans-serif',
+                textAlign: 'center',
+                marginLeft:'30px' 
               }}
             >
               DISCOVER THE FUTURE
@@ -216,6 +218,9 @@ function HomeSection() {
                 fontWeight: '500', // Set bold for small screens
                 marginTop: '20px',
                 fontFamily: '"Roboto Condensed", sans-serif', 
+                textAlign: 'center',
+                marginLeft:'30px', 
+
               }}
             >
               HOME FOR YOU
@@ -257,6 +262,8 @@ function HomeSection() {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              marginLeft: '-180px',
+              marginRight: '-180px',
               marginTop: '-10px', // Reduced gap for smaller screen layout
             }}
           >
