@@ -9,6 +9,7 @@ import SnackbarContent from '@mui/material/SnackbarContent';
 import CircularProgress from '@mui/material/CircularProgress';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 // Using forwardRef to expose the section for scrolling
 const ContactSection = forwardRef((props, ref) => {
@@ -22,6 +23,10 @@ const ContactSection = forwardRef((props, ref) => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [isSuccess, setIsSuccess] = useState(true);
+
+  // Determine screen size to apply responsive layout
+  const isFullScreen = useMediaQuery('(min-width: 1200px)');
+  const isSmallScreen = useMediaQuery('(max-width: 1200px)'); // Non-fullscreen cases
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -53,18 +58,6 @@ const ContactSection = forwardRef((props, ref) => {
       setSnackbarOpen(true);
       return;
     }
-    if (!validateEmail(formData.email)) {
-      setSnackbarMessage('Please enter a valid email address');
-      setIsSuccess(false);
-      setSnackbarOpen(true);
-      return;
-    }
-    if (formData.phone && !validatePhone(formData.phone)) {
-      setSnackbarMessage('Please enter a valid phone number');
-      setIsSuccess(false);
-      setSnackbarOpen(true);
-      return;
-    }
 
     setLoading(true);
     setTimeout(() => {
@@ -75,9 +68,6 @@ const ContactSection = forwardRef((props, ref) => {
     }, 10000);
   };
 
-  const validateEmail = (email) => /\S+@\S+\.\S+/.test(email);
-  const validatePhone = (phone) => /^[0-9]{10}$/.test(phone);
-
   const handleCloseSnackbar = () => setSnackbarOpen(false);
 
   return (
@@ -85,32 +75,52 @@ const ContactSection = forwardRef((props, ref) => {
       ref={ref}
       sx={{
         display: 'flex',
-        flexDirection: { xs: 'column', md: 'row' },
+        flexDirection: isFullScreen ? 'row' : 'column',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         gap: '40px',
-        padding: '60px 65px',
+        padding: '60px 20px',
       }}
     >
+      {/* Conditionally render the heading on top for smaller screens */}
+      {!isFullScreen && (
+        <Typography
+          variant="h3"
+          sx={{
+            marginTop: '20px',
+            fontWeight: 700,
+            fontFamily: '"Roboto Condensed", sans-serif',
+            fontSize: '3.0rem',
+            fontStyle: 'italic',
+            color: 'black',
+            textAlign: 'center',
+            marginBottom: '30px',
+          }}
+        >
+          REACH OUT TO US
+        </Typography>
+      )}
+
       {/* Form Section */}
       <Box
         sx={{
           backgroundColor: '#F5F5F5',
           padding: '40px',
           borderRadius: '10px',
-          width: { xs: '100%', md: '40%' },
+          width: isSmallScreen ? '70vw' : '40%', // Set width to 70% of viewport width for non-fullscreen cases
           boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
-          marginLeft: '50px',
+          marginX: 'auto', // Ensures central alignment
         }}
       >
         <Typography
           variant="h5"
-          sx={{ 
-            fontWeight: 'bold', 
+          sx={{
+            fontWeight: 'bold',
             fontFamily: '"Roboto Condensed", sans-serif',
-            fontSize: '2.8rem',
-            color: '#2F4F4F', 
-            marginBottom: '30px' 
+            fontSize: '2rem',
+            color: '#2F4F4F',
+            marginBottom: '20px',
+            textAlign: 'center',
           }}
         >
           Have a Question?
@@ -127,34 +137,17 @@ const ContactSection = forwardRef((props, ref) => {
           noValidate
           autoComplete="off"
         >
-        <TextField
-          name="phone"
-          label="Phone Number"
-          variant="outlined"
-          fullWidth
-          value={formData.phone}
-          onChange={handleChange}
-          sx={{ 
-            backgroundColor: 'white',
-            '& .MuiOutlinedInput-root': {
-              '& fieldset': {
-                borderWidth: '3px', // thickness of the outline
-                borderColor: '#CED1D6'
-              },
-              '&:hover fieldset': {
-                borderWidth: '3px', //thickness on hover
-                borderColor: '#2F4F4F', //color when hover
-              },
-              '&.Mui-focused fieldset': {
-                borderColor: '#2F4F4F', //color when focused
-                borderWidth: '3px', // thickness when focused
-              },
-            },
-          }}
-          InputLabelProps={{
-            style: { fontWeight: 'bold', color: '#A3A7AF' },
-          }}
-        />
+          {/* Form Fields */}
+          <TextField
+            name="phone"
+            label="Phone Number"
+            variant="outlined"
+            fullWidth
+            value={formData.phone}
+            onChange={handleChange}
+            sx={{ backgroundColor: 'white' }}
+            InputLabelProps={{ style: { fontWeight: 'bold', color: '#A3A7AF' } }}
+          />
           <Box sx={{ display: 'flex', gap: '10px' }}>
             <TextField
               name="phone"
@@ -163,26 +156,8 @@ const ContactSection = forwardRef((props, ref) => {
               fullWidth
               value={formData.phone}
               onChange={handleChange}
-              sx={{ 
-                backgroundColor: 'white',
-                '& .MuiOutlinedInput-root': {
-                  '& fieldset': {
-                    borderWidth: '3px', // thickness of the outline
-                    borderColor: '#CED1D6'                
-                  },
-                  '&:hover fieldset': {
-                    borderWidth: '3px', //thickness on hover
-                    borderColor: '#2F4F4F', //color when hover
-                  },
-                  '&.Mui-focused fieldset': {
-                    borderColor: '#2F4F4F', //color when focused
-                    borderWidth: '3px', // thickness when focused
-                  },
-                },
-              }}
-              InputLabelProps={{
-                style: { fontWeight: 'bold', color: '#A3A7AF' },
-              }}
+              sx={{ backgroundColor: 'white' }}
+              InputLabelProps={{ style: { fontWeight: 'bold', color: '#A3A7AF' } }}
             />
             <TextField
               name="subject"
@@ -191,26 +166,8 @@ const ContactSection = forwardRef((props, ref) => {
               fullWidth
               value={formData.subject}
               onChange={handleChange}
-              sx={{ 
-                backgroundColor: 'white',
-                '& .MuiOutlinedInput-root': {
-                  '& fieldset': {
-                    borderWidth: '3px', // thickness of the outline
-                    borderColor: '#CED1D6'
-                  },
-                  '&:hover fieldset': {
-                    borderWidth: '3px', //thickness on hover
-                    borderColor: '#2F4F4F', //color when hover
-                  },
-                  '&.Mui-focused fieldset': {
-                    borderColor: '#2F4F4F', //color when focused
-                    borderWidth: '3px', // thickness when focused
-                  },
-                },
-              }}
-              InputLabelProps={{
-                style: { fontWeight: 'bold', color: '#A3A7AF' },
-              }}
+              sx={{ backgroundColor: 'white' }}
+              InputLabelProps={{ style: { fontWeight: 'bold', color: '#A3A7AF' } }}
             />
           </Box>
           <TextField
@@ -222,26 +179,8 @@ const ContactSection = forwardRef((props, ref) => {
             rows={4}
             value={formData.question}
             onChange={handleChange}
-            sx={{ 
-              backgroundColor: 'white',
-              '& .MuiOutlinedInput-root': {
-                '& fieldset': {
-                  borderWidth: '3px', // thickness of the outline
-                  borderColor: '#CED1D6'
-                },
-                '&:hover fieldset': {
-                  borderWidth: '3px', //thickness on hover
-                  borderColor: '#2F4F4F', //color when hover
-                },
-                '&.Mui-focused fieldset': {
-                  borderColor: '#2F4F4F', //color when focused
-                  borderWidth: '3px', // thickness when focused
-                },
-              },
-            }}
-            InputLabelProps={{
-              style: { fontWeight: 'bold', color: '#A3A7AF' },
-            }}
+            sx={{ backgroundColor: 'white' }}
+            InputLabelProps={{ style: { fontWeight: 'bold', color: '#A3A7AF' } }}
           />
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Button
@@ -265,9 +204,6 @@ const ContactSection = forwardRef((props, ref) => {
                 color: 'white',
                 fontWeight: 'bold',
                 padding: '12px 45px',
-                '&:hover': {
-                  backgroundColor: '#2F4F4F',
-                },
               }}
               disabled={loading}
             >
@@ -277,71 +213,68 @@ const ContactSection = forwardRef((props, ref) => {
         </Box>
       </Box>
 
-      {/* Additional Content Section */}
-      <Box
-        sx={{
-          position: 'relative',
-          textAlign: 'center',
-          width: { xs: '100%', md: '45%' },
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexDirection: 'column',
-        }}
-      >
+      {/* Additional Content Section - Only for Full Screen */}
+      {isFullScreen && (
         <Box
           sx={{
-            position: 'absolute',
-            width: 'calc(60% + 10px)',
-            height: '350px',
-            backgroundColor: '#F5F5F5',
-            borderRadius: '0px 0px 0px 500px',
-            zIndex: -1,
-            
-            right: '50px',
-            transform: 'translateY(-28%)',
-          }}
-        />
-        <Typography
-          variant="h3"
-          sx={{
-            fontWeight: 700,
-            fontFamily: '"Roboto Condensed", sans-serif',
-            fontSize: '5rem',
-            fontStyle: 'italic',
-            color: 'black',
-            lineHeight: 1.2,
-            zIndex: 1,
-            paddingLeft: '120px',
-            transform: 'translateX(-30%)',
+            position: 'relative',
+            textAlign: 'center',
+            width: '45%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexDirection: 'column',
           }}
         >
-          REACH OUT
-        </Typography>
-        <Typography
-          variant="h3"
-          sx={{
-            fontWeight: 700,
-            fontFamily: '"Roboto Condensed", sans-serif',
-            fontSize: '5rem',
-            fontStyle: 'italic',
-            color: 'black',
-            lineHeight: 1.2,
-            zIndex: 1,
-            paddingLeft: '150px',
-            transform: 'translateX(-50%)'
-          }}
-        >
-          TO US
-        </Typography>
-      </Box>
+          <Box
+            sx={{
+              position: 'absolute',
+              width: 'calc(60% + 10px)',
+              height: '350px',
+              backgroundColor: '#F5F5F5',
+              borderRadius: '0px 0px 0px 500px',
+              zIndex: -1,
+              right: '50px',
+              transform: 'translateY(-28%)',
+            }}
+          />
+          <Typography
+            variant="h3"
+            sx={{
+              fontWeight: 700,
+              fontFamily: '"Roboto Condensed", sans-serif',
+              fontSize: '5rem',
+              fontStyle: 'italic',
+              color: 'black',
+              lineHeight: 1.2,
+              zIndex: 1,
+              paddingLeft: '120px',
+              transform: 'translateX(-30%)',
+            }}
+          >
+            REACH OUT
+          </Typography>
+          <Typography
+            variant="h3"
+            sx={{
+              fontWeight: 700,
+              fontFamily: '"Roboto Condensed", sans-serif',
+              fontSize: '5rem',
+              fontStyle: 'italic',
+              color: 'black',
+              lineHeight: 1.2,
+              zIndex: 1,
+              paddingLeft: '150px',
+              transform: 'translateX(-50%)'
+            }}
+          >
+            TO US
+          </Typography>
+        </Box>
+      )}
 
       {/* Snackbar */}
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={6000}
-        onClose={handleCloseSnackbar}
-      >
+      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleCloseSnackbar}>
         <SnackbarContent
           style={{
             backgroundColor: isSuccess ? '#FFFFFF' : '#FFFFFF',
