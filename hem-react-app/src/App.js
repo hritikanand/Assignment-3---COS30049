@@ -41,7 +41,7 @@ function App() {
     <Router>
       <div>
         <Header contactRef={contactRef} />
-        <ScrollToTopOnHomeClick /> {/* Ensures page scrolls to top on Home click */}
+        <ScrollToTopOnHomeClick /> {/* ensures page scrolls to top on Home click */}
         <Routes>
           <Route
             path="/"

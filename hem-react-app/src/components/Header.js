@@ -62,7 +62,7 @@ function Header({ contactRef }) {
           alignItems: 'center',
         }}
       >
-        {/* Hamburger Menu Icon (Left-Aligned for Small Screens) */}
+        {/* Hamburger Menu Icon (Left-Aligned for small screens) */}
         <IconButton
           edge="start"
           color="inherit"
