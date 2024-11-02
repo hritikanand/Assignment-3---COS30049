@@ -76,6 +76,8 @@ function About() {
                 textAlign: 'center',
                 boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.1)',
                 transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                marginLeft: isLargeScreen && index === 0 ? '30px' : (!isLargeScreen ? '40px' : 0), // Left margin for full screen and small screens
+                marginRight: isLargeScreen && index === cardContent.length - 1 ? '30px' : (!isLargeScreen ? '40px' : 0), // Right margin for full screen and small screens
                 '&:hover': {
                   transform: 'scale(1.05)',
                   boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.2)',
