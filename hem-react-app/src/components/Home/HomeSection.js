@@ -4,184 +4,277 @@ import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-
-// Import the hero image
 import heroImage from '../../assets/hero1.PNG';
+import useScreenSize from '../../components/Home/useScreenSize';
 
 function HomeSection() {
   const navigate = useNavigate();
+  const isFullScreen = useScreenSize();
 
-  // Function to handle navigation when the button is clicked
   const handleGetStartedClick = () => {
     navigate('/predict');
   };
 
   return (
-    <Box
-      sx={{
-        position: 'relative',
-        display: 'flex',
-        flexDirection: { xs: 'column', md: 'row' },
-        alignItems: 'center',
-        padding: '0',
-        gap: '20px',
-        overflow: 'hidden',
-        width: '100%',
-      }}
-    >
-      {/* Title Section */}
-      <Box
-        sx={{
-          position: 'absolute',
-          top: { xs: '100px', md: '135px' },
-          left: { xs: '20px', md: '60px' },
-          zIndex: 3,
-          transform: 'translateY(-100%)',
-        }}
-      >
-        <Typography
-          variant="h2"
-          sx={{
-            fontFamily: '"Roboto Condensed", sans-serif', 
-            fontWeight: 430,
-            fontSize: '4.5rem',
-            color: 'black',
-          }}
-        >
-          DISCOVER THE FUTURE
-        </Typography>
-      </Box>
-
-      {/* Content Wrapper to shift down */}
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: { xs: 'column', md: 'row' },
-          alignItems: 'stretch',
-          width: '100%',
-          gap: '20px',
-          paddingTop: '130px',
-        }}
-      >
-        {/* Grey Background Box */}
+    <>
+      {isFullScreen ? (
+        // Full-Screen Layout
         <Box
           sx={{
-            backgroundColor: '#d2d5db',
-            borderRadius: '0 25px 25px 0',
-            width: { xs: '100%', md: '33%' },
-            display: 'flex',
-            flexDirection: 'column',
-            padding: '20px 0',
-            paddingTop: 0,
-            boxSizing: 'border-box',
-            overflow: 'hidden',
+            marginTop: '-10px',
             position: 'relative',
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            padding: '0',
+            gap: '20px',
+            overflow: 'hidden',
+            width: '100%',
           }}
         >
-          {/* Inside Grey Box: "HOME FOR YOU" Heading */}
-          <Typography
-            variant="h3"
-            sx={{
-              fontFamily: '"Roboto Condensed", sans-serif', 
-              fontWeight: 430,
-              fontSize: '4.4rem',
-              color: 'black',
-              margin: 0,
-              padding: 0,
-              paddingTop: '10px',
-              paddingLeft: '60px',
-              lineHeight: 1,
-              textAlign: 'left',
-            }}
-          >
-            HOME FOR YOU
-          </Typography>
-
-          {/* Green Box inside the Grey Box */}
+          {/* Title Section */}
           <Box
             sx={{
-              
-              backgroundColor: '#2F4F4F',
-              color: 'white',
-              borderRadius: '0 330px 25px 0',
-              width: '100%',
-              flexGrow: 1,
-              boxSizing: 'border-box',
-              padding: '0 50px 25px 0px', // Adjust padding for height
-              marginTop: '10px', // Adjust margin to bring content higher
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              zIndex: 2,
-              paddingLeft: '20px',
-              transform: 'translateY(20px)', // Move down by 20 pixels
+              position: 'absolute',
+              top: '135px',
+              left: '60px',
+              zIndex: 3,
+              transform: 'translateY(-100%)',
             }}
           >
             <Typography
-              variant="body1"
+              variant="h2"
               sx={{
-                marginTop: '100px',
-                marginLeft: '45px',
-                marginRight: '20px',
-                mb: -4, // Adjusted for more space above button
-                fontWeight: 'normal',
                 fontFamily: '"Roboto Condensed", sans-serif',
-                textAlign: 'left',
-                fontSize: '1.35rem',
-                fontStyle: 'italic',
-              }}
-            >
-              Stay a step ahead in Melbourne’s housing market. Our platform harnesses machine learning to bring you personalized price forecasts for residential properties—empowering you to buy, sell, or invest with clarity and confidence
-            </Typography>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleGetStartedClick}
-              sx={{
-                
-                marginTop:'70px',
-                marginLeft: '45px',
-                backgroundColor: 'white',
+                fontWeight: 430,
+                fontSize: '4.5rem',
                 color: 'black',
-                fontFamily: '"Roboto Condensed", sans-serif',
-                fontSize: '1.2rem',
-                fontWeight: 'bold',
-                borderRadius: '30px',              
-                alignSelf: 'left',
-                width: '200px'
               }}
-              endIcon={<span>&rarr;</span>}
             >
-              Get Started
-            </Button>
+              DISCOVER THE FUTURE
+            </Typography>
+          </Box>
+
+          {/* Content Wrapper */}
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'stretch',
+              width: '100%',
+              gap: '20px',
+              paddingTop: '130px',
+            }}
+          >
+            {/* Grey Background Box */}
+            <Box
+              sx={{
+                backgroundColor: '#d2d5db',
+                borderRadius: '0 25px 25px 0',
+                width: '33%',
+                display: 'flex',
+                flexDirection: 'column',
+                padding: '20px 0',
+                paddingTop: 0,
+                position: 'relative',
+                overflow: 'hidden', // Ensure it extends to the bottom
+              }}
+            >
+              {/* Inside Grey Box: "HOME FOR YOU" Heading */}
+              <Typography
+                variant="h3"
+                sx={{
+                  fontFamily: '"Roboto Condensed", sans-serif',
+                  fontWeight: 430,
+                  fontSize: '4.4rem',
+                  color: 'black',
+                  paddingTop: '10px',
+                  paddingLeft: '60px',
+                  textAlign: 'left',
+                }}
+              >
+                HOME FOR YOU
+              </Typography>
+
+              {/* Green Box */}
+              <Box
+                sx={{
+                  backgroundColor: '#2F4F4F',
+                  color: 'white',
+                  width: '100%',
+                  boxSizing: 'border-box',
+                  borderRadius: '0 330px 0 0',
+                  padding: '0 50px 25px 20px',
+                  marginTop: '10px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  zIndex: 2,
+                  transform: 'translateY(20px)',
+                  flexGrow: 1, // Allows the green box to stretch downwards
+                }}
+              >
+                <Typography
+                  variant="body1"
+                  sx={{
+                    marginTop: '-10px',
+                    marginLeft: '45px',
+                    marginRight: '20px',
+                    fontFamily: '"Roboto Condensed", sans-serif',
+                    textAlign: 'left',
+                    fontSize: '1.35rem',
+                    fontStyle: 'italic',
+                  }}
+                >
+                  Stay a step ahead in Melbourne’s housing market. Our platform harnesses machine learning to bring you personalized price forecasts for residential properties—empowering you to buy, sell, or invest with clarity and confidence.
+                </Typography>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleGetStartedClick}
+                  sx={{
+                    marginTop: '10px',
+                    marginLeft: '45px',
+                    backgroundColor: 'white',
+                    color: 'black',
+                    fontFamily: '"Roboto Condensed", sans-serif',
+                    fontSize: '1.2rem',
+                    fontWeight: 'bold',
+                    borderRadius: '30px',
+                    width: '200px'
+                  }}
+                  endIcon={<span>&rarr;</span>}
+                >
+                  Get Started
+                </Button>
+              </Box>
+            </Box>
+
+            {/* Image Section */}
+            <Box
+              sx={{
+                flex: 1,
+                display: 'flex',
+                justifyContent: 'right',
+                alignItems: 'center',
+                zIndex: 3,
+              }}
+            >
+              <Box
+                component="img"
+                src={heroImage}
+                alt="Person with laptop"
+                sx={{
+                  width: '100%',
+                  height: 'auto',
+                  maxHeight: '680px',
+                  objectFit: 'cover',
+                  borderRadius: '25px 0 0 25px',
+                }}
+              />
+            </Box>
           </Box>
         </Box>
-
-        {/* Image Section */}
+      ) : (
+        // Small-Screen Layout
         <Box
           sx={{
-            flex: 1,
+            position: 'relative',
             display: 'flex',
-            justifyContent: 'right',
+            flexDirection: 'column',
             alignItems: 'center',
-            zIndex: 3,
+            padding: '0',
+            gap: '10px', // Reduced gap for smaller screen layout
+            overflow: 'hidden',
+            width: '100%',
           }}
         >
-        <Box
-          component="img"
-          src={heroImage}
-          alt="Person with laptop"
-          sx={{
-            width: { xs: '80%', md: '100%' }, // 80% width on small screens, 100% on medium and up
-            height: 'auto',
-            maxHeight: '680px', 
-            objectFit: 'cover',
-            borderRadius: '25px 0 0 25px',
-          }}
-        />
+          {/* Text Section */}
+          <Box
+            sx={{
+              width: '80%', // Make the box 80% of the screen width
+              padding: '20px',
+              textAlign: 'center',
+              marginRight: '140px',
+              marginLeft: '100px'
+            }}
+          >
+            <Typography
+              variant="h2"
+              sx={{
+                fontSize: { xs: '2rem', sm: '3rem' },
+                fontWeight: 700 , // Set bold for small screens
+                fontFamily: '"Roboto Condensed", sans-serif', 
+              }}
+            >
+              DISCOVER THE FUTURE
+            </Typography>
+            <Typography
+              variant="h3"
+              sx={{
+                fontSize: { xs: '1.8rem', sm: '2.5rem' },
+                fontWeight: '500', // Set bold for small screens
+                marginTop: '20px',
+                fontFamily: '"Roboto Condensed", sans-serif', 
+              }}
+            >
+              HOME FOR YOU
+            </Typography>
+            <Box
+              sx={{
+                backgroundColor: '#2F4F4F',
+                padding: '20px',
+                borderRadius: '10px',
+                marginTop: '20px',
+                width: '100%',
+              }}
+            >
+              <Typography variant="body1" sx={{ fontSize: '1rem', color: 'white' }}>
+                Stay a step ahead in Melbourne’s housing market. Our platform harnesses machine learning to bring you personalized price forecasts for residential properties—empowering you to buy, sell, or invest with clarity and confidence.
+              </Typography>
+              <Button
+                variant="contained"
+                onClick={handleGetStartedClick}
+                sx={{
+                  marginTop: '20px',
+                  padding: '10px 20px',
+                  fontSize: '1rem',
+                  backgroundColor: 'white',
+                  color: 'black',
+                  fontWeight: 'bold',
+                  borderRadius: '30px',
+                }}
+              >
+                Get Started →
+              </Button>
+            </Box>
+          </Box>
+
+          {/* Image Section */}
+          <Box
+            sx={{
+              width: '80%', // Ensure the image section matches the green box width
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: '-10px', // Reduced gap for smaller screen layout
+            }}
+          >
+            <Box
+              component="img"
+              src={heroImage}
+              alt="Person with laptop"
+              sx={{
+                width: '100%',
+                height: 'auto',
+                objectFit: 'cover',
+                borderRadius: '10px',
+              }}
+            />
+          </Box>
         </Box>
-      </Box>      
-    </Box>
+      )}
+    </>
   );
 }
 
