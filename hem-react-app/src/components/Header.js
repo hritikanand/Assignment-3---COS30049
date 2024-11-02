@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive'; // Import useMediaQuery from react-responsive
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -22,8 +23,13 @@ function Header({ contactRef }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(location.pathname);
 
+  // Media queries for responsive design
+  const isDesktopOrLaptop = useMediaQuery({ minWidth: 1224 });
+  const isTabletOrMobile = useMediaQuery({ maxWidth: 1224 });
+
   const handleDialogOpen = () => {
     setDialogOpen(true);
+    setDrawerOpen(false); // Close drawer when opening the dialog on mobile
   };
 
   const handleDialogClose = () => {
@@ -33,7 +39,7 @@ function Header({ contactRef }) {
   const handleContactClick = () => {
     if (location.pathname === '/') {
       setDrawerOpen(false);
-      setActiveTab('/contact'); // Set contact as active
+      setActiveTab('/contact');
       contactRef?.current?.scrollIntoView({ behavior: 'smooth' });
     } else {
       setActiveTab('/contact');
@@ -48,13 +54,6 @@ function Header({ contactRef }) {
     setDrawerOpen(false);
   };
 
-  const toggleDrawer = (open) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-      return;
-    }
-    setDrawerOpen(open);
-  };
-
   return (
     <AppBar position="sticky" color="default" elevation={0} sx={{ padding: '8px 24px', height: '100px', backgroundColor: 'white' }}>
       <Toolbar
@@ -65,16 +64,20 @@ function Header({ contactRef }) {
           alignItems: 'center',
         }}
       >
-        <IconButton
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          onClick={toggleDrawer(true)}
-          sx={{ display: { xs: 'block', md: 'none' }, mr: 1, ml: 0, color: 'black' }}
-        >
-          <MenuIcon />
-        </IconButton>
+        {/* Hamburger Menu Icon for Small Screens */}
+        {isTabletOrMobile && (
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            onClick={() => setDrawerOpen(true)}
+            sx={{ mr: 1, ml: 0, color: 'black' }}
+          >
+            <MenuIcon />
+          </IconButton>
+        )}
 
+        {/* Logo and Title */}
         <Box
           sx={{
             display: 'flex',
@@ -113,73 +116,80 @@ function Header({ contactRef }) {
           </Typography>
         </Box>
 
-        <Box
-          sx={{
-            display: { xs: 'none', md: 'flex' },
-            justifyContent: 'center',
-            backgroundColor: '#e4e9ec',
-            borderRadius: '50px',
-            padding: '0 20px',
-            gap: 2,
-            flexGrow: 1,
-            maxWidth: '700px',
-          }}
-        >
-          <Button
-            onClick={() => handleNavigation('/')}
+        {/* Navigation Links for Large Screens */}
+        {isDesktopOrLaptop && (
+          <Box
             sx={{
-              ...buttonStyles,
-              backgroundColor: activeTab === '/' ? '#2F4F4F' : 'transparent',
-              color: activeTab === '/' ? 'white' : '#333',
+              display: 'flex',
+              justifyContent: 'center',
+              backgroundColor: '#e4e9ec',
+              borderRadius: '50px',
+              padding: '0 20px',
+              gap: 2,
+              flexGrow: 1,
+              maxWidth: '700px',
             }}
           >
-            Home
-          </Button>
-          <Button
-            onClick={() => handleNavigation('/about')}
-            sx={{
-              ...buttonStyles,
-              backgroundColor: activeTab === '/about' ? '#2F4F4F' : 'transparent',
-              color: activeTab === '/about' ? 'white' : '#333',
-            }}
-          >
-            About
-          </Button>
-          <Button
-            onClick={() => handleNavigation('/predict')}
-            sx={{
-              ...buttonStyles,
-              backgroundColor: activeTab === '/predict' ? '#2F4F4F' : 'transparent',
-              color: activeTab === '/predict' ? 'white' : '#333',
-            }}
-          >
-            Predict
-          </Button>
-          <Button
-            onClick={handleContactClick}
-            sx={{
-              ...buttonStyles,
-              backgroundColor: activeTab === '/contact' ? '#2F4F4F' : 'transparent',
-              color: activeTab === '/contact' ? 'white' : '#333',
-            }}
-          >
-            Contact
-          </Button>
-        </Box>
+            <Button
+              onClick={() => handleNavigation('/')}
+              sx={{
+                ...buttonStyles,
+                backgroundColor: activeTab === '/' ? '#2F4F4F' : 'transparent',
+                color: activeTab === '/' ? 'white' : '#333',
+              }}
+            >
+              Home
+            </Button>
+            <Button
+              onClick={() => handleNavigation('/about')}
+              sx={{
+                ...buttonStyles,
+                backgroundColor: activeTab === '/about' ? '#2F4F4F' : 'transparent',
+                color: activeTab === '/about' ? 'white' : '#333',
+              }}
+            >
+              About
+            </Button>
+            <Button
+              onClick={() => handleNavigation('/predict')}
+              sx={{
+                ...buttonStyles,
+                backgroundColor: activeTab === '/predict' ? '#2F4F4F' : 'transparent',
+                color: activeTab === '/predict' ? 'white' : '#333',
+              }}
+            >
+              Predict
+            </Button>
+            <Button
+              onClick={handleContactClick}
+              sx={{
+                ...buttonStyles,
+                backgroundColor: activeTab === '/contact' ? '#2F4F4F' : 'transparent',
+                color: activeTab === '/contact' ? 'white' : '#333',
+              }}
+            >
+              Contact
+            </Button>
+          </Box>
+        )}
 
-        <Button
-          variant="outlined"
-          color="inherit"
-          onClick={handleDialogOpen}
-          sx={{ ...signInButtonStyles, display: { xs: 'none', md: 'block' } }}
-        >
-          Sign in | Sign up
-        </Button>
+        {/* Sign In/Sign Up Button */}
+        {isDesktopOrLaptop && (
+          <Button
+            variant="outlined"
+            color="inherit"
+            onClick={handleDialogOpen}
+            sx={{ ...signInButtonStyles }}
+          >
+            Sign in | Sign up
+          </Button>
+        )}
       </Toolbar>
 
-      <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
+      {/* Mobile Drawer Menu */}
+      <Drawer anchor="left" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 1 }}>
-          <IconButton onClick={toggleDrawer(false)}>
+          <IconButton onClick={() => setDrawerOpen(false)}>
             <CloseIcon />
           </IconButton>
         </Box>
@@ -193,7 +203,7 @@ function Header({ contactRef }) {
           <ListItem button onClick={() => handleNavigation('/predict')} sx={drawerItemStyles(activeTab === '/predict')}>
             <ListItemText primary="Predict" />
           </ListItem>
-          <ListItem button onClick={() => { handleContactClick(); setDrawerOpen(false); }} sx={drawerItemStyles(activeTab === '/contact')}>
+          <ListItem button onClick={handleContactClick} sx={drawerItemStyles(activeTab === '/contact')}>
             <ListItemText primary="Contact" />
           </ListItem>
           <ListItem button onClick={handleDialogOpen}>
@@ -207,6 +217,7 @@ function Header({ contactRef }) {
   );
 }
 
+// Common button styles for large screen
 const buttonStyles = {
   fontFamily: '"Roboto Condensed", sans-serif',
   fontWeight: 'bold',
@@ -218,6 +229,7 @@ const buttonStyles = {
   minWidth: '150px',
 };
 
+// Drawer item styles with hover and active color
 const drawerItemStyles = (isActive) => ({
   color: isActive ? 'green' : 'inherit',
   '&:hover': { color: 'green' },

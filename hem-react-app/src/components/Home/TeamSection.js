@@ -115,7 +115,7 @@ function TeamSection() {
             color: '#2F4F4F',
             marginBottom: '90px', //gap from 'the team' and member boxes
             fontStyle: 'italic',
-            fontWeight: 'bold',
+            
             fontSize: '2.5rem',
             display: 'flex',
             justifyContent: 'center',
