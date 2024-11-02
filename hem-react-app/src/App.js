@@ -8,6 +8,7 @@ import TeamSection from './components/Home/TeamSection';
 import ContactSection from './components/Home/ContactSection';
 import About from './components/About/AboutSection';
 import Predict from './components/Predict/Predict';
+import Box from '@mui/material/Box';
 
 function ScrollToContact({ contactRef }) {
   const location = useLocation();
@@ -39,29 +40,43 @@ function App() {
 
   return (
     <Router>
-      <div>
+      {/* Main container with full height to ensure footer is pushed to the bottom */}
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: '100vh',
+        }}
+      >
         <Header contactRef={contactRef} />
-        <ScrollToTopOnHomeClick /> {/* ensures page scrolls to top on Home click */}
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <div>
-                <HomeSection />
-                <TeamSection />
-                <div id="contact-section" ref={contactRef}>
-                  <ContactSection />
-                </div>
-              </div>
-            }
-          />
-          <Route path="/about" element={<About />} />
-          <Route path="/predict" element={<Predict />} />
-        </Routes>
 
+        {/* Scroll handlers */}
+        <ScrollToTopOnHomeClick />
         <ScrollToContact contactRef={contactRef} />
+
+        {/* Main content area */}
+        <Box component="main" sx={{ flexGrow: 1 }}>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <div>
+                  <HomeSection />
+                  <TeamSection />
+                  <div id="contact-section" ref={contactRef}>
+                    <ContactSection />
+                  </div>
+                </div>
+              }
+            />
+            <Route path="/about" element={<About />} />
+            <Route path="/predict" element={<Predict />} />
+          </Routes>
+        </Box>
+
+        {/* Footer at the bottom */}
         <Footer />
-      </div>
+      </Box>
     </Router>
   );
 }

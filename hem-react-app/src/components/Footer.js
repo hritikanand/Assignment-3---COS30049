@@ -1,4 +1,3 @@
-// src/components/Footer.js
 import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -9,7 +8,7 @@ function Footer() {
   return (
     <Box
       sx={{
-        backgroundColor: '#2F4F4F', 
+        backgroundColor: '#2F4F4F',
         color: 'white',
         padding: { xs: '20px', md: '30px 60px' },
         display: 'flex',
@@ -18,6 +17,7 @@ function Footer() {
         alignItems: 'center',
         flexWrap: 'wrap',
         gap: { xs: '10px', md: '0' },
+        marginTop: 'auto',  // Ensures footer sticks to bottom
       }}
     >
       {/* Logo and Name */}
