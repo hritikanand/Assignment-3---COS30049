@@ -49,6 +49,7 @@ const ContactSection = forwardRef((props, ref) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // Check if email is provided and valid
     if (!formData.email) {
       setSnackbarMessage('Email is required');
       setIsSuccess(false);
@@ -61,6 +62,16 @@ const ContactSection = forwardRef((props, ref) => {
       setSnackbarOpen(true);
       return;
     }
+
+    // If phone number is provided, validate it
+    if (formData.phone && formData.phone.length !== 10) {
+      setSnackbarMessage('Please enter a valid 10-digit phone number');
+      setIsSuccess(false);
+      setSnackbarOpen(true);
+      return;
+    }
+
+    // Check if question is provided
     if (!formData.question) {
       setSnackbarMessage('Please enter your question');
       setIsSuccess(false);
