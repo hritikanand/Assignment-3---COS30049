@@ -1,4 +1,3 @@
-// src/components/Home/ContactSection.js
 import React, { forwardRef, useState } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -11,7 +10,6 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-// Using forwardRef to expose the section for scrolling
 const ContactSection = forwardRef((props, ref) => {
   const [formData, setFormData] = useState({
     email: '',
@@ -24,9 +22,8 @@ const ContactSection = forwardRef((props, ref) => {
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [isSuccess, setIsSuccess] = useState(true);
 
-  // Determine screen size to apply responsive layout
   const isFullScreen = useMediaQuery('(min-width: 1200px)');
-  const isSmallScreen = useMediaQuery('(max-width: 1200px)'); // Non-fullscreen cases
+  const isSmallScreen = useMediaQuery('(max-width: 1200px)');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,10 +40,22 @@ const ContactSection = forwardRef((props, ref) => {
     setSnackbarOpen(true);
   };
 
+  const validateEmail = (email) => {
+    // Simple email validation pattern
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!formData.email) {
+      setSnackbarMessage('Email is required');
+      setIsSuccess(false);
+      setSnackbarOpen(true);
+      return;
+    }
+    if (!validateEmail(formData.email)) {
       setSnackbarMessage('Please enter a valid email address');
       setIsSuccess(false);
       setSnackbarOpen(true);
@@ -65,7 +74,7 @@ const ContactSection = forwardRef((props, ref) => {
       setSnackbarMessage('Thank you for reaching out to us! Your question has been submitted. Our team will reach out to you soon.');
       setIsSuccess(true);
       setSnackbarOpen(true);
-    }, 10000);
+    }, 3000);
   };
 
   const handleCloseSnackbar = () => setSnackbarOpen(false);
@@ -82,7 +91,6 @@ const ContactSection = forwardRef((props, ref) => {
         padding: '60px 20px',
       }}
     >
-      {/* Conditionally render the heading on top for smaller screens */}
       {!isFullScreen && (
         <Typography
           variant="h3"
@@ -101,15 +109,14 @@ const ContactSection = forwardRef((props, ref) => {
         </Typography>
       )}
 
-      {/* Form Section */}
       <Box
         sx={{
           backgroundColor: '#F5F5F5',
           padding: '40px',
           borderRadius: '10px',
-          width: isSmallScreen ? '70vw' : '40%', // Set width to 70% of viewport width for non-fullscreen cases
+          width: isSmallScreen ? '70vw' : '40%',
           boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
-          marginX: 'auto', // Ensures central alignment
+          marginX: 'auto',
         }}
       >
         <Typography
@@ -137,17 +144,19 @@ const ContactSection = forwardRef((props, ref) => {
           noValidate
           autoComplete="off"
         >
-          {/* Form Fields */}
+          {/* Email Field */}
           <TextField
-            name="phone"
-            label="Phone Number"
+            name="email"
+            label="Email"
             variant="outlined"
             fullWidth
-            value={formData.phone}
+            value={formData.email}
             onChange={handleChange}
             sx={{ backgroundColor: 'white' }}
             InputLabelProps={{ style: { fontWeight: 'bold', color: '#A3A7AF' } }}
           />
+
+          {/* Phone and Subject Fields */}
           <Box sx={{ display: 'flex', gap: '10px' }}>
             <TextField
               name="phone"
@@ -170,6 +179,8 @@ const ContactSection = forwardRef((props, ref) => {
               InputLabelProps={{ style: { fontWeight: 'bold', color: '#A3A7AF' } }}
             />
           </Box>
+
+          {/* Question Field */}
           <TextField
             name="question"
             label="Question*"
@@ -182,6 +193,7 @@ const ContactSection = forwardRef((props, ref) => {
             sx={{ backgroundColor: 'white' }}
             InputLabelProps={{ style: { fontWeight: 'bold', color: '#A3A7AF' } }}
           />
+
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Button
               onClick={handleClear}
@@ -213,7 +225,6 @@ const ContactSection = forwardRef((props, ref) => {
         </Box>
       </Box>
 
-      {/* Additional Content Section - Only for Full Screen */}
       {isFullScreen && (
         <Box
           sx={{

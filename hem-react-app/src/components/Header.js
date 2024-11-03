@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive'; // Import useMediaQuery from react-responsive
 import AppBar from '@mui/material/AppBar';
@@ -26,6 +26,11 @@ function Header({ contactRef }) {
   // Media queries for responsive design
   const isDesktopOrLaptop = useMediaQuery({ minWidth: 1224 });
   const isTabletOrMobile = useMediaQuery({ maxWidth: 1224 });
+
+  useEffect(() => {
+    // Update active tab based on the current path
+    setActiveTab(location.pathname);
+  }, [location.pathname]);
 
   const handleDialogOpen = () => {
     setDialogOpen(true);
@@ -196,7 +201,7 @@ function Header({ contactRef }) {
           </IconButton>
         </Box>
         <List sx={{ width: 250 }}>
-          <ListItem button onClick={() => handleNavigation('/')} sx={drawerItemStyles(activeTab === '/')}>
+          <ListItem button onClick={() => handleNavigation('/')} sx={drawerItemStyles(activeTab === '/')} >
             <ListItemText primary="Home" />
           </ListItem>
           <ListItem button onClick={() => handleNavigation('/about')} sx={drawerItemStyles(activeTab === '/about')}>
